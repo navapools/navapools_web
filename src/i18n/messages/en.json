@@ -1,0 +1,10 @@
+{
+	"nav": {
+		"home": "Home",
+		"contact": "Contact"
+	},
+	"hero": {
+		"title": "Welcome to NavaPools",
+		"subtitle": "Jamstack PWA with Next.js, Prismic, and SendGrid"
+	}
+}
