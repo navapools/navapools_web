@@ -24,7 +24,7 @@ export default function ContactPage() {
 			} else {
 				setStatus("ERROR");
 			}
-		} catch (e) {
+		} catch {
 			setStatus("ERROR");
 		}
 	}

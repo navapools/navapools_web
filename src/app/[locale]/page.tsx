@@ -12,7 +12,7 @@ export default async function LocaleHomePage({ params }: { params: Promise<{ loc
                 <SliceZone slices={page.data.slices || []} />
             </div>
         );
-    } catch (e) {
+    } catch {
         return (
             <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center p-8">
                 <div className="max-w-2xl mx-auto text-center">

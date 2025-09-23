@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 				<SliceZone slices={page.data.slices || []} />
 			</div>
 		);
-	} catch (e) {
+	} catch {
 		notFound();
 	}
 }

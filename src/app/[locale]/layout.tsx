@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ReactNode } from "react";
 import "../globals.css";
 import { getNavigation, getSettings } from "@/prismic/queries";
+import type { Navigation, Settings } from "@/types/prismic";
 
 export const metadata: Metadata = {
 	title: "NavaPools",
@@ -31,8 +32,8 @@ export default async function LocaleLayout({
 }) {
     const { locale } = await params;
     const messages = (await import(`@/i18n/messages/${locale}.json`)).default;
-    let nav: any = { data: { items: [] } };
-    let settings: any = { data: { site_name: "NavaPools", footer_text: "" } };
+    let nav: Navigation = { data: { items: [] } };
+    let settings: Settings = { data: { site_name: "NavaPools", footer_text: "" } };
     try {
         [nav, settings] = await Promise.all([
             getNavigation(locale),
@@ -56,8 +57,8 @@ export default async function LocaleLayout({
                         />
                     </div>
                     <nav className="flex gap-4">
-                        {nav.data.items?.map((it: any, i: number) => (
-                            <Link key={i} href={it.link?.url || "#"}>{it.label || "Link"}</Link>
+                        {nav.data.items?.map((it: { link?: { url: string }; label?: string }, i: number) => (
+                            <Link key={i} href={(it.link?.url || "#") as unknown as URL}>{it.label || "Link"}</Link>
                         ))}
                     </nav>
                     <LanguageSwitcher locale={locale} />
