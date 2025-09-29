@@ -1,4 +1,5 @@
 {
+  "apiEndpoint": "https://navapools.cdn.prismic.io/api/v2",
   "repositoryName": "navapools",
   "adapter": "@slicemachine/adapter-next",
   "libraries": ["./src/slices"],

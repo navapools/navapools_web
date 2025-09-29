@@ -14,47 +14,387 @@
       },
       "title": {
         "type": "Text",
-        "config": { "label": "Title" }
-      },
-      "hero_image": {
-        "type": "Image",
-        "config": { "label": "Hero Image" }
+        "config": {
+          "label": "Title"
+        }
       },
       "slices": {
         "type": "Slices",
-        "fieldset": "Slices",
-        "labels": [],
-        "choices": {
-          "hero": {
-            "type": "Slice",
-            "fieldset": "Hero",
-            "description": "Hero slice",
-            "icon": "image",
-            "display": "list",
-            "non-repeat": {
-              "heading": { "type": "Text", "config": { "label": "Heading" } },
-              "subheading": { "type": "Text", "config": { "label": "Subheading" } },
-              "cta_label": { "type": "Text", "config": { "label": "CTA Label" } },
-              "cta_link": { "type": "Link", "config": { "label": "CTA Link" } }
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "hero_fullscreen": {
+              "type": "Slice",
+              "fieldset": "Hero Fullscreen",
+              "description": "Full screen hero section with background image",
+              "icon": "image",
+              "display": "list",
+              "non-repeat": {
+                "background_image": {
+                  "type": "Image",
+                  "config": {
+                    "label": "Background Image",
+                    "constraint": {
+                      "width": 1920,
+                      "height": 1080
+                    }
+                  }
+                },
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Title",
+                    "placeholder": "Enter title..."
+                  }
+                },
+                "subtitle": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Subtitle",
+                    "placeholder": "Enter subtitle..."
+                  }
+                },
+                "primary_cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Primary Button Text",
+                    "placeholder": "Enter primary button text..."
+                  }
+                },
+                "primary_cta_link": {
+                  "type": "Link",
+                  "config": {
+                    "label": "Primary Button Link",
+                    "placeholder": "Select primary button destination..."
+                  }
+                },
+                "secondary_cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Secondary Button Text",
+                    "placeholder": "Enter secondary button text..."
+                  }
+                },
+                "secondary_cta_link": {
+                  "type": "Link",
+                  "config": {
+                    "label": "Secondary Button Link",
+                    "placeholder": "Select secondary button destination..."
+                  }
+                }
+              },
+              "repeat": {}
             },
-            "repeat": {}
-          },
-          "rich_text": {
-            "type": "Slice",
-            "fieldset": "Rich Text",
-            "non-repeat": {
-              "content": { "type": "StructuredText", "config": { "label": "Content", "multi": "paragraph,heading1,heading2,heading3,preformatted,strong,em,hyperlink,list-item,o-list-item" } }
+            "trust_bar": {
+              "type": "Slice",
+              "fieldset": "Trust Bar",
+              "description": "Trust indicators bar",
+              "icon": "verified_user",
+              "display": "list",
+              "non-repeat": {},
+              "repeat": {
+                "icon": {
+                  "type": "Image",
+                  "config": {
+                    "label": "Icon",
+                    "constraint": {
+                      "width": 64,
+                      "height": 64
+                    }
+                  }
+                },
+                "text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Text",
+                    "placeholder": "Enter trust indicator text..."
+                  }
+                }
+              }
             },
-            "repeat": {}
-          },
-          "call_to_action": {
-            "type": "Slice",
-            "fieldset": "Call To Action",
-            "non-repeat": {
-              "text": { "type": "Text", "config": { "label": "Text" } },
-              "link": { "type": "Link", "config": { "label": "Link" } }
+            "benefits": {
+              "type": "Slice",
+              "fieldset": "Benefits",
+              "description": "Benefits section with icons",
+              "icon": "stars",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Title",
+                    "placeholder": "Enter section title..."
+                  }
+                },
+                "subtitle": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Subtitle",
+                    "placeholder": "Enter section subtitle..."
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text",
+                    "placeholder": "Enter button text..."
+                  }
+                },
+                "cta_link": {
+                  "type": "Link",
+                  "config": {
+                    "label": "CTA Link",
+                    "placeholder": "Select button destination..."
+                  }
+                }
+              },
+              "repeat": {
+                "icon": {
+                  "type": "Image",
+                  "config": {
+                    "label": "Icon",
+                    "constraint": {
+                      "width": 64,
+                      "height": 64
+                    }
+                  }
+                },
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Title",
+                    "placeholder": "Enter benefit title..."
+                  }
+                },
+                "description": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Description",
+                    "placeholder": "Enter benefit description..."
+                  }
+                }
+              }
             },
-            "repeat": {}
+            "solutions": {
+              "type": "Slice",
+              "fieldset": "Solutions",
+              "description": "Solutions section with alternating images",
+              "icon": "style",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Section Title",
+                    "placeholder": "Enter section title..."
+                  }
+                }
+              },
+              "repeat": {
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "label": "Image",
+                    "constraint": {
+                      "width": 800,
+                      "height": 600
+                    }
+                  }
+                },
+                "subtitle": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Subtitle",
+                    "placeholder": "Enter solution subtitle..."
+                  }
+                },
+                "text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Text",
+                    "placeholder": "Enter solution description..."
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text",
+                    "placeholder": "Enter button text..."
+                  }
+                },
+                "cta_link": {
+                  "type": "Link",
+                  "config": {
+                    "label": "CTA Link",
+                    "placeholder": "Select button destination..."
+                  }
+                }
+              }
+            },
+            "process": {
+              "type": "Slice",
+              "fieldset": "Process",
+              "description": "Process steps section",
+              "icon": "timeline",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Section Title",
+                    "placeholder": "Enter section title..."
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text",
+                    "placeholder": "Enter button text..."
+                  }
+                },
+                "cta_link": {
+                  "type": "Link",
+                  "config": {
+                    "label": "CTA Link",
+                    "placeholder": "Select button destination..."
+                  }
+                }
+              },
+              "repeat": {
+                "icon": {
+                  "type": "Image",
+                  "config": {
+                    "label": "Step Icon",
+                    "constraint": {
+                      "width": 48,
+                      "height": 48
+                    }
+                  }
+                },
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Step Title",
+                    "placeholder": "Enter step title..."
+                  }
+                },
+                "description": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Step Description",
+                    "placeholder": "Enter step description..."
+                  }
+                }
+              }
+            },
+            "testimonials": {
+              "type": "Slice",
+              "fieldset": "Testimonials",
+              "description": "Customer testimonials section",
+              "icon": "format_quote",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Section Title",
+                    "placeholder": "Enter section title..."
+                  }
+                }
+              },
+              "repeat": {
+                "image": {
+                  "type": "Image",
+                  "config": {
+                    "label": "Author Image",
+                    "constraint": {
+                      "width": 80,
+                      "height": 80
+                    }
+                  }
+                },
+                "quote": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Quote",
+                    "placeholder": "Enter testimonial quote..."
+                  }
+                },
+                "author_name": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Author Name",
+                    "placeholder": "Enter author name..."
+                  }
+                },
+                "author_location": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Author Location",
+                    "placeholder": "Enter author location..."
+                  }
+                }
+              }
+            },
+            "call_to_action_full": {
+              "type": "Slice",
+              "fieldset": "Call To Action Full",
+              "description": "Full width call to action section with contact info",
+              "icon": "call_to_action",
+              "display": "list",
+              "non-repeat": {
+                "title": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Title",
+                    "placeholder": "Enter title..."
+                  }
+                },
+                "subtitle": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Subtitle",
+                    "placeholder": "Enter subtitle..."
+                  }
+                },
+                "cta_text": {
+                  "type": "Text",
+                  "config": {
+                    "label": "CTA Text",
+                    "placeholder": "Enter button text..."
+                  }
+                },
+                "cta_link": {
+                  "type": "Link",
+                  "config": {
+                    "label": "CTA Link",
+                    "placeholder": "Select button destination..."
+                  }
+                },
+                "phone": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Phone Number",
+                    "placeholder": "Enter phone number..."
+                  }
+                },
+                "email": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Email Address",
+                    "placeholder": "Enter email address..."
+                  }
+                },
+                "service_area": {
+                  "type": "Text",
+                  "config": {
+                    "label": "Service Area",
+                    "placeholder": "Enter service area..."
+                  }
+                }
+              },
+              "repeat": {}
+            }
           }
         }
       }

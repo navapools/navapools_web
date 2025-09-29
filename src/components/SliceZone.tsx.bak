@@ -1,3 +1,4 @@
+import { Content } from "@prismicio/client";
 import { SliceZone as PrismicSliceZone } from "@prismicio/react";
 import HeroFullscreen from "@/slices/HeroFullscreen";
 import TrustBar from "@/slices/TrustBar";
@@ -6,7 +7,6 @@ import Solutions from "@/slices/Solutions";
 import Process from "@/slices/Process";
 import Testimonials from "@/slices/Testimonials";
 import CallToActionFull from "@/slices/CallToActionFull";
-import { SliceZoneType } from "@/types/slices";
 
 const components = {
 	hero_fullscreen: HeroFullscreen,
@@ -17,6 +17,12 @@ const components = {
 	testimonials: Testimonials,
 	call_to_action_full: CallToActionFull,
 };
+
+interface SliceZoneProps {
+	slices: Content.SliceZone;
+}
+
+import { SliceZoneType } from "@/types/slices";
 
 export default function SliceZone({ slices }: { slices: SliceZoneType[] }) {
 	return <PrismicSliceZone slices={slices} components={components} />;

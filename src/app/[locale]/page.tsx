@@ -5,14 +5,11 @@ import Image from "next/image";
 export default async function LocaleHomePage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
     try {
-        const page = await getPageByUID(locale, "home");
-        return (
-            <div>
-                {page.data.title && <h1 className="text-2xl font-semibold p-4">{page.data.title}</h1>}
-                <SliceZone slices={page.data.slices || []} />
-            </div>
-        );
-    } catch {
+        const page = await getPageByUID(locale, "nava-pools-page");
+        console.log('Page data:', page);  // Para depurar
+        return <SliceZone slices={page.data.slices || []} />;
+    } catch (error) {
+        console.error('Error fetching page:', error);  // Para depurar
         return (
             <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center p-8">
                 <div className="max-w-2xl mx-auto text-center">
