@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
 			{ protocol: "https", hostname: "navapools.cdn.prismic.io" }
 		],
 	},
+	experimental: {
+		optimizePackageImports: ['@prismicio/client', '@prismicio/react'],
+	},
 };
 
 export default withNextIntl(nextConfig);
