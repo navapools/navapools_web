@@ -11,22 +11,23 @@ interface VideoBackgroundProps {
 export default function VideoBackground({ videoUrl, mobileVideoUrl, className = '' }: VideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasError, setHasError] = useState(false);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-  const activeVideoUrl = isMobile && mobileVideoUrl ? mobileVideoUrl : videoUrl;
+  const normalizedDesktopUrl = typeof videoUrl === 'string' ? videoUrl.trim() : '';
+  const normalizedMobileUrl = typeof mobileVideoUrl === 'string' ? mobileVideoUrl.trim() : '';
+  const hasAnyVideoUrl = Boolean(normalizedDesktopUrl || normalizedMobileUrl);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !activeVideoUrl || activeVideoUrl.trim() === '') {
+    if (!video || !hasAnyVideoUrl) {
       return;
     }
 
     const handleError = () => {
-      console.warn('Video failed to load:', activeVideoUrl);
+      console.warn('Video failed to load');
       setHasError(true);
     };
 
     const handleCanPlay = () => {
-      console.log('Video can play:', activeVideoUrl);
+      console.log('Video can play');
       // Intentar reproducir cuando el video esté listo
       video.play().catch((error) => {
         console.warn('Video autoplay failed (this is normal):', error);
@@ -47,10 +48,10 @@ export default function VideoBackground({ videoUrl, mobileVideoUrl, className = 
         video.currentTime = 0;
       }
     };
-  }, [activeVideoUrl]);
+  }, [hasAnyVideoUrl]);
 
-  // Si no hay URL de video válida o hay error, mostrar un placeholder
-  if (!activeVideoUrl || activeVideoUrl.trim() === '' || hasError) {
+  // Si no hay ninguna URL válida o hay error, mostrar un placeholder
+  if (!hasAnyVideoUrl || hasError) {
     return (
       <div className={`absolute inset-0 w-full h-full overflow-hidden bg-gradient-to-br from-blue-900 to-gray-900 ${className}`}>
         <div className="absolute inset-0 bg-black/30" />
@@ -62,14 +63,21 @@ export default function VideoBackground({ videoUrl, mobileVideoUrl, className = 
     <div className={`absolute inset-0 w-full h-full overflow-hidden ${className}`}>
       <video
         ref={videoRef}
-        src={activeVideoUrl}
+        src={normalizedDesktopUrl || normalizedMobileUrl}
         autoPlay
         loop
         muted
         playsInline
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
-      />
+      >
+        {normalizedMobileUrl && (
+          <source src={normalizedMobileUrl} media="(max-width: 768px)" />
+        )}
+        {normalizedDesktopUrl && (
+          <source src={normalizedDesktopUrl} />
+        )}
+      </video>
       <div className="absolute inset-0 bg-black/30" />
     </div>
   );
