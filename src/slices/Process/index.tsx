@@ -2,11 +2,11 @@ import type { SliceComponentProps, PrismicImage, PrismicLink } from "@/types/sli
 import Image from "next/image";
 import Link from "next/link";
 
-interface Step {
-    icon: PrismicImage;
-    title: string;
-    description: string;
-}
+// interface Step {
+//     icon: PrismicImage;
+//     title: string;
+//     description: string;
+// }
 
 export default function Process({ slice }: SliceComponentProps) {
     const { 

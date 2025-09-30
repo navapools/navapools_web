@@ -26,7 +26,7 @@
             "hero_fullscreen": {
               "type": "Slice",
               "fieldset": "Hero Fullscreen",
-              "description": "Full screen hero section with background image",
+              "description": "Full screen hero section with background image or video",
               "icon": "image",
               "display": "list",
               "non-repeat": {
@@ -38,6 +38,22 @@
                       "width": 1920,
                       "height": 1080
                     }
+                  }
+                },
+                "video_url": {
+                  "type": "Link",
+                  "config": {
+                    "label": "Video URL",
+                    "placeholder": "Enter the ImageKit.io video URL",
+                    "select": null
+                  }
+                },
+                "mobile_video_url": {
+                  "type": "Link",
+                  "config": {
+                    "label": "Mobile Video URL",
+                    "placeholder": "Enter the ImageKit.io mobile video URL (optional)",
+                    "select": null
                   }
                 },
                 "title": {
@@ -65,7 +81,8 @@
                   "type": "Link",
                   "config": {
                     "label": "Primary Button Link",
-                    "placeholder": "Select primary button destination..."
+                    "placeholder": "Select primary button destination...",
+                    "select": null
                   }
                 },
                 "secondary_cta_text": {
@@ -79,7 +96,8 @@
                   "type": "Link",
                   "config": {
                     "label": "Secondary Button Link",
-                    "placeholder": "Select secondary button destination..."
+                    "placeholder": "Select secondary button destination...",
+                    "select": null
                   }
                 }
               },
@@ -144,7 +162,8 @@
                   "type": "Link",
                   "config": {
                     "label": "CTA Link",
-                    "placeholder": "Select button destination..."
+                    "placeholder": "Select button destination...",
+                    "select": null
                   }
                 }
               },
@@ -226,7 +245,8 @@
                   "type": "Link",
                   "config": {
                     "label": "CTA Link",
-                    "placeholder": "Select button destination..."
+                    "placeholder": "Select button destination...",
+                    "select": null
                   }
                 }
               }
@@ -256,7 +276,8 @@
                   "type": "Link",
                   "config": {
                     "label": "CTA Link",
-                    "placeholder": "Select button destination..."
+                    "placeholder": "Select button destination...",
+                    "select": null
                   }
                 }
               },
@@ -368,7 +389,8 @@
                   "type": "Link",
                   "config": {
                     "label": "CTA Link",
-                    "placeholder": "Select button destination..."
+                    "placeholder": "Select button destination...",
+                    "select": null
                   }
                 },
                 "phone": {
@@ -399,5 +421,6 @@
         }
       }
     }
-  }
+  },
+  "format": "custom"
 }

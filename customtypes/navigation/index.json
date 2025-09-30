@@ -10,11 +10,23 @@
         "config": {
           "label": "Items",
           "fields": {
-            "label": { "type": "Text", "config": { "label": "Label" } },
-            "link": { "type": "Link", "config": { "label": "Link" } }
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Label"
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "select": null
+              }
+            }
           }
         }
       }
     }
-  }
+  },
+  "format": "custom"
 }

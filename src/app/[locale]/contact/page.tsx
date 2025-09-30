@@ -24,7 +24,8 @@ export default function ContactPage() {
 			} else {
 				setStatus("ERROR");
 			}
-		} catch {
+		} catch (error) {
+			console.error('Error sending message:', error);
 			setStatus("ERROR");
 		}
 	}

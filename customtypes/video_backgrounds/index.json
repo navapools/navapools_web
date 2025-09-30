@@ -1,0 +1,34 @@
+{
+  "id": "video_backgrounds",
+  "label": "Video Backgrounds",
+  "format": "custom",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID",
+          "placeholder": ""
+        },
+        "type": "UID"
+      },
+      "video_url": {
+        "config": {
+          "label": "Video URL",
+          "placeholder": "Enter the ImageKit.io video URL",
+          "select": null
+        },
+        "type": "Link"
+      },
+      "mobile_video_url": {
+        "config": {
+          "label": "Mobile Video URL",
+          "placeholder": "Enter the ImageKit.io mobile video URL (optional)",
+          "select": null
+        },
+        "type": "Link"
+      }
+    }
+  }
+}

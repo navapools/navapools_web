@@ -1,6 +1,15 @@
 import type { SliceComponentProps, PrismicImage, PrismicLink } from "@/types/slices";
 import Image from "next/image";
 import Link from "next/link";
+import VideoBackground from "@/components/VideoBackground";
+
+interface VideoField {
+	url?: string;
+}
+
+interface VideoFieldOrString extends VideoField {
+	url?: string;
+}
 
 export default function HeroFullscreen({ slice }: SliceComponentProps) {
     const {
@@ -10,7 +19,9 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
         primary_cta_text = '',
         primary_cta_link = {} as PrismicLink,
         secondary_cta_text = '',
-        secondary_cta_link = {} as PrismicLink
+        secondary_cta_link = {} as PrismicLink,
+        video_url = '',
+        mobile_video_url = ''
     } = {
         background_image: slice.primary?.background_image as PrismicImage,
         title: slice.primary?.title as string,
@@ -18,13 +29,20 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
         primary_cta_text: slice.primary?.primary_cta_text as string,
         primary_cta_link: slice.primary?.primary_cta_link as PrismicLink,
         secondary_cta_text: slice.primary?.secondary_cta_text as string,
-        secondary_cta_link: slice.primary?.secondary_cta_link as PrismicLink
+        secondary_cta_link: slice.primary?.secondary_cta_link as PrismicLink,
+        video_url: (slice.primary?.video_url as VideoFieldOrString)?.url || slice.primary?.video_url as string || '',
+        mobile_video_url: (slice.primary?.mobile_video_url as VideoFieldOrString)?.url || slice.primary?.mobile_video_url as string || ''
     };
 
     return (
         <section className="relative min-h-screen flex items-center overflow-hidden">
-            {/* Background Image */}
-            {background_image?.url && (
+            {/* Background Video or Image */}
+            {video_url ? (
+                <VideoBackground
+                    videoUrl={video_url}
+                    mobileVideoUrl={mobile_video_url}
+                />
+            ) : background_image?.url ? (
                 <Image
                     src={background_image.url}
                     alt={background_image.alt || ""}
@@ -33,6 +51,9 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
                     quality={100}
                     priority
                 />
+            ) : (
+                // Fallback background cuando no hay video ni imagen
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-gray-900 to-blue-800" />
             )}
             
             {/* Gradient Overlay */}

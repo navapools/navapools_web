@@ -1,13 +1,23 @@
 import { getPageByUID } from "@/prismic/queries";
 import SliceZone from "@/components/SliceZone";
 import Image from "next/image";
+import type { SliceZoneType } from "@/types/slices";
+
+interface PageData {
+    slices?: SliceZoneType[];
+}
 
 export default async function LocaleHomePage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
     try {
         const page = await getPageByUID(locale, "nava-pools-page");
         console.log('Page data:', page);  // Para depurar
-        return <SliceZone slices={page.data.slices || []} />;
+        
+        // Verificar que sea un documento de tipo "page" antes de acceder a slices
+        const isPageDocument = page.type === 'page';
+        const pageData = isPageDocument ? page.data as PageData : null;
+        
+        return <SliceZone slices={pageData?.slices || []} />;
     } catch (error) {
         console.error('Error fetching page:', error);  // Para depurar
         return (

@@ -2,28 +2,55 @@ import { createClient } from "@/prismicio";
 import { localeToPrismicLang } from "./helpers";
 import type { Navigation, Settings } from "@/types/prismic";
 
+interface NavigationItem {
+	link?: { url?: string };
+	label?: string;
+}
+
 export async function getSettings(locale: string): Promise<Settings> {
-	const client = createClient();
-	const result = await client.getSingle("settings", { lang: localeToPrismicLang(locale) });
-	return {
-		data: {
-			site_name: result.data.site_name as string,
-			footer_text: result.data.footer_text as string
-		}
-	};
+	try {
+		const client = createClient();
+		const result = await client.getSingle("settings", { lang: localeToPrismicLang(locale) });
+		return {
+			data: {
+				site_name: result.data.site_name as string || "NavaPools",
+				footer_text: result.data.footer_text as string || ""
+			}
+		};
+	} catch (error) {
+		console.warn('Settings not found in Prismic, using fallback:', error);
+		return {
+			data: {
+				site_name: "NavaPools",
+				footer_text: ""
+			}
+		};
+	}
 }
 
 export async function getNavigation(locale: string): Promise<Navigation> {
-	const client = createClient();
-	const result = await client.getSingle("navigation", { lang: localeToPrismicLang(locale) });
-	return {
-		data: {
-			items: (result.data.items || []).map((item: { link?: { url?: string }; label?: string }) => ({
-				link: { url: item.link?.url || "" },
-				label: item.label || ""
-			}))
-		}
-	};
+	try {
+		const client = createClient();
+		const result = await client.getSingle("navigation", { lang: localeToPrismicLang(locale) });
+		return {
+			data: {
+				items: (result.data.items || []).map((item: unknown) => {
+					const navItem = item as NavigationItem;
+					return {
+						link: { url: navItem.link?.url || "" },
+						label: navItem.label || ""
+					};
+				})
+			}
+		};
+	} catch (error) {
+		console.warn('Navigation not found in Prismic, using fallback:', error);
+		return {
+			data: {
+				items: []
+			}
+		};
+	}
 }
 
 export async function getPageByUID(locale: string, uid: string) {
@@ -47,7 +74,7 @@ export async function getPageByUID(locale: string, uid: string) {
         });
         return page;
     } catch (error) {
-        console.log('Could not find page in requested language, checking alternates...');
+        console.log('Could not find page in requested language, checking alternates...', error);
         
         try {
             // Si no se encuentra en el idioma solicitado, obtener la página en inglés

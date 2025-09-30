@@ -21,14 +21,20 @@ export default async function LocaleLayout({
 }) {
     const { locale } = await params;
     const messages = (await import(`@/i18n/messages/${locale}.json`)).default;
+    
+    // Usar fallbacks por defecto y luego intentar cargar desde Prismic
     let nav: Navigation = { data: { items: [] } };
     let settings: Settings = { data: { site_name: "NavaPools", footer_text: "" } };
+    
     try {
         [nav, settings] = await Promise.all([
             getNavigation(locale),
             getSettings(locale),
         ]);
-    } catch {}
+    } catch (error) {
+        console.warn('Using fallback navigation and settings:', error);
+        // Los valores por defecto ya están asignados arriba
+    }
 
     return (
         <NextIntlClientProvider locale={locale} messages={messages}>

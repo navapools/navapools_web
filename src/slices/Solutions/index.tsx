@@ -2,13 +2,13 @@ import type { SliceComponentProps, PrismicImage, PrismicLink } from "@/types/sli
 import Image from "next/image";
 import Link from "next/link";
 
-interface Solution {
-    image: PrismicImage;
-    subtitle: string;
-    text: string;
-    cta_text: string;
-    cta_link: PrismicLink;
-}
+// interface Solution {
+//     image: PrismicImage;
+//     subtitle: string;
+//     text: string;
+//     cta_text: string;
+//     cta_link: PrismicLink;
+// }
 
 export default function Solutions({ slice }: SliceComponentProps) {
     const { title = '' } = slice.primary as { title: string };

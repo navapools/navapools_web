@@ -1,0 +1,76 @@
+{
+  "id": "hero_fullscreen",
+  "type": "SharedSlice",
+  "name": "Hero Fullscreen",
+  "description": "Full screen hero section with video background",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Enter title text..."
+          }
+        },
+        "subtitle": {
+          "type": "Text",
+          "config": {
+            "label": "Subtitle",
+            "placeholder": "Enter subtitle text..."
+          }
+        },
+        "primary_button_text": {
+          "type": "Text",
+          "config": {
+            "label": "Primary Button Text",
+            "placeholder": "Enter primary button text..."
+          }
+        },
+        "primary_button_link": {
+          "type": "Link",
+          "config": {
+            "label": "Primary Button Link",
+            "placeholder": "Select a link..."
+          }
+        },
+        "secondary_button_text": {
+          "type": "Text",
+          "config": {
+            "label": "Secondary Button Text",
+            "placeholder": "Enter secondary button text..."
+          }
+        },
+        "secondary_button_link": {
+          "type": "Link",
+          "config": {
+            "label": "Secondary Button Link",
+            "placeholder": "Select a link..."
+          }
+        },
+        "video_url": {
+          "type": "Link",
+          "config": {
+            "label": "Video URL",
+            "placeholder": "Enter the ImageKit.io video URL",
+            "select": null
+          }
+        },
+        "mobile_video_url": {
+          "type": "Link",
+          "config": {
+            "label": "Mobile Video URL",
+            "placeholder": "Enter the ImageKit.io mobile video URL (optional)",
+            "select": null
+          }
+        }
+      }
+    }
+  ]
+}
