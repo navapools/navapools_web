@@ -3,6 +3,7 @@
   "label": "Page",
   "repeatable": true,
   "status": true,
+  "format": "custom",
   "json": {
     "Main": {
       "uid": {
@@ -23,6 +24,9 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "plans": {
+              "type": "SharedSlice"
+            },
             "hero_fullscreen": {
               "type": "Slice",
               "fieldset": "Hero Fullscreen",
@@ -421,6 +425,5 @@
         }
       }
     }
-  },
-  "format": "custom"
+  }
 }

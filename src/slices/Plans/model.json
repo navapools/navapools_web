@@ -1,0 +1,61 @@
+{
+  "id": "plans",
+  "type": "SharedSlice",
+  "name": "Plans",
+  "description": "Pricing/Plans section with badges, left copy, and plan cards",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "imageUrl": "",
+      "primary": {
+        "section_title": {
+          "type": "Text",
+          "config": {
+            "label": "Section Title",
+            "placeholder": "Nuestros Planes"
+          }
+        },
+        "section_subtitle": {
+          "type": "Text",
+          "config": {
+            "label": "Section Subtitle",
+            "placeholder": "Elige el plan que más se adapte a ti"
+          }
+        },
+        "badges": {
+          "type": "Group",
+          "config": {
+            "label": "Badges",
+            "fields": {
+              "icon": { "type": "Image", "config": { "label": "Icon" } },
+              "label": { "type": "Text", "config": { "label": "Label" } },
+              "sublabel": { "type": "Text", "config": { "label": "Sub Label" } }
+            }
+          }
+        },
+        "plans": {
+          "type": "Group",
+          "config": {
+            "label": "Plans",
+            "fields": {
+              "image": { "type": "Image", "config": { "label": "Image" } },
+              "name": { "type": "Text", "config": { "label": "Name" } },
+              "description": { "type": "Text", "config": { "label": "Description" } },
+              "price": { "type": "Text", "config": { "label": "Price" } },
+              "features": { "type": "Text", "config": { "label": "Features (one per line)", "multi": "paragraph" } },
+              "cta_text": { "type": "Text", "config": { "label": "CTA Text" } },
+              "cta_link": { "type": "Link", "config": { "label": "CTA Link" } }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
+
+

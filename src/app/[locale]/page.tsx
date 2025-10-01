@@ -16,6 +16,8 @@ export default async function LocaleHomePage({ params }: { params: Promise<{ loc
         // Verificar que sea un documento de tipo "page" antes de acceder a slices
         const isPageDocument = page.type === 'page';
         const pageData = isPageDocument ? page.data as PageData : null;
+        const sliceTypes = (pageData?.slices || []).map((s: { slice_type: string }) => s.slice_type);
+        console.log('Slice types:', sliceTypes);
         
         return <SliceZone slices={pageData?.slices || []} />;
     } catch (error) {

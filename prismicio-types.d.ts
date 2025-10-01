@@ -141,6 +141,38 @@ export interface PageDocumentDataSlicesHeroFullscreenSlicePrimary {
   background_image: prismic.ImageField<never>;
 
   /**
+   * Video URL field in *Page → Slice Zone → Hero Fullscreen → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter the ImageKit.io video URL
+   * - **API ID Path**: page.slices[].hero_fullscreen.primary.video_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  video_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Mobile Video URL field in *Page → Slice Zone → Hero Fullscreen → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter the ImageKit.io mobile video URL (optional)
+   * - **API ID Path**: page.slices[].hero_fullscreen.primary.mobile_video_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  mobile_video_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
    * Title field in *Page → Slice Zone → Hero Fullscreen → Primary*
    *
    * - **Field Type**: Text
@@ -681,6 +713,7 @@ export type PageDocumentDataSlicesCallToActionFullSlice = prismic.Slice<
 >;
 
 type PageDocumentDataSlicesSlice =
+  | PlansSlice
   | PageDocumentDataSlicesHeroFullscreenSlice
   | PageDocumentDataSlicesTrustBarSlice
   | PageDocumentDataSlicesBenefitsSlice
@@ -982,6 +1015,194 @@ export type HeroFullscreenSlice = prismic.SharedSlice<
   HeroFullscreenSliceVariation
 >;
 
+/**
+ * Item in *Plans → Default → Primary → Badges*
+ */
+export interface PlansSliceDefaultPrimaryBadgesItem {
+  /**
+   * Icon field in *Plans → Default → Primary → Badges*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.badges[].icon
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  icon: prismic.ImageField<never>;
+
+  /**
+   * Label field in *Plans → Default → Primary → Badges*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.badges[].label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Sub Label field in *Plans → Default → Primary → Badges*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.badges[].sublabel
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  sublabel: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Plans → Default → Primary → Plans*
+ */
+export interface PlansSliceDefaultPrimaryPlansItem {
+  /**
+   * Image field in *Plans → Default → Primary → Plans*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.plans[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Name field in *Plans → Default → Primary → Plans*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.plans[].name
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Description field in *Plans → Default → Primary → Plans*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.plans[].description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Price field in *Plans → Default → Primary → Plans*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.plans[].price
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  price: prismic.KeyTextField;
+
+  /**
+   * Features (one per line) field in *Plans → Default → Primary → Plans*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.plans[].features
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  features: prismic.KeyTextField;
+
+  /**
+   * CTA Text field in *Plans → Default → Primary → Plans*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.plans[].cta_text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * CTA Link field in *Plans → Default → Primary → Plans*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.plans[].cta_link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  cta_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+}
+
+/**
+ * Primary content in *Plans → Default → Primary*
+ */
+export interface PlansSliceDefaultPrimary {
+  /**
+   * Section Title field in *Plans → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Nuestros Planes
+   * - **API ID Path**: plans.default.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Section Subtitle field in *Plans → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Elige el plan que más se adapte a ti
+   * - **API ID Path**: plans.default.primary.section_subtitle
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  section_subtitle: prismic.KeyTextField;
+
+  /**
+   * Badges field in *Plans → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.badges[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  badges: prismic.GroupField<Simplify<PlansSliceDefaultPrimaryBadgesItem>>;
+
+  /**
+   * Plans field in *Plans → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: plans.default.primary.plans[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  plans: prismic.GroupField<Simplify<PlansSliceDefaultPrimaryPlansItem>>;
+}
+
+/**
+ * Default variation for Plans Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PlansSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<PlansSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Plans*
+ */
+type PlansSliceVariation = PlansSliceDefault;
+
+/**
+ * Plans Shared Slice
+ *
+ * - **API ID**: `plans`
+ * - **Description**: Pricing/Plans section with badges, left copy, and plan cards
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PlansSlice = prismic.SharedSlice<"plans", PlansSliceVariation>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -1029,6 +1250,12 @@ declare module "@prismicio/client" {
       HeroFullscreenSliceDefaultPrimary,
       HeroFullscreenSliceVariation,
       HeroFullscreenSliceDefault,
+      PlansSlice,
+      PlansSliceDefaultPrimaryBadgesItem,
+      PlansSliceDefaultPrimaryPlansItem,
+      PlansSliceDefaultPrimary,
+      PlansSliceVariation,
+      PlansSliceDefault,
     };
   }
 }
