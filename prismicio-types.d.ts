@@ -713,6 +713,7 @@ export type PageDocumentDataSlicesCallToActionFullSlice = prismic.Slice<
 >;
 
 type PageDocumentDataSlicesSlice =
+  | ReviewsSlice
   | PlansSlice
   | PageDocumentDataSlicesHeroFullscreenSlice
   | PageDocumentDataSlicesTrustBarSlice
@@ -1203,6 +1204,136 @@ type PlansSliceVariation = PlansSliceDefault;
  */
 export type PlansSlice = prismic.SharedSlice<"plans", PlansSliceVariation>;
 
+/**
+ * Item in *Reviews → Default → Primary → Reviews*
+ */
+export interface ReviewsSliceDefaultPrimaryReviewsItem {
+  /**
+   * Pool Image field in *Reviews → Default → Primary → Reviews*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews.default.primary.reviews[].pool_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  pool_image: prismic.ImageField<never>;
+
+  /**
+   * Client Name field in *Reviews → Default → Primary → Reviews*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: María González
+   * - **API ID Path**: reviews.default.primary.reviews[].client_name
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  client_name: prismic.KeyTextField;
+
+  /**
+   * Rating (1-5) field in *Reviews → Default → Primary → Reviews*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: 5
+   * - **API ID Path**: reviews.default.primary.reviews[].rating
+   * - **Documentation**: https://prismic.io/docs/fields/number
+   */
+  rating: prismic.NumberField;
+
+  /**
+   * Review Text field in *Reviews → Default → Primary → Reviews*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Excelente servicio, mi piscina nunca había estado tan limpia...
+   * - **API ID Path**: reviews.default.primary.reviews[].review_text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  review_text: prismic.KeyTextField;
+
+  /**
+   * City field in *Reviews → Default → Primary → Reviews*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Miami, FL
+   * - **API ID Path**: reviews.default.primary.reviews[].city
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  city: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *Reviews → Default → Primary*
+ */
+export interface ReviewsSliceDefaultPrimary {
+  /**
+   * Section Title field in *Reviews → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Lo que dicen nuestros clientes
+   * - **API ID Path**: reviews.default.primary.section_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Section Subtitle field in *Reviews → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Testimonios reales de familias satisfechas
+   * - **API ID Path**: reviews.default.primary.section_subtitle
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  section_subtitle: prismic.KeyTextField;
+
+  /**
+   * Main Pool Image field in *Reviews → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews.default.primary.main_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  main_image: prismic.ImageField<never>;
+
+  /**
+   * Reviews field in *Reviews → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews.default.primary.reviews[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  reviews: prismic.GroupField<Simplify<ReviewsSliceDefaultPrimaryReviewsItem>>;
+}
+
+/**
+ * Default variation for Reviews Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ReviewsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ReviewsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Reviews*
+ */
+type ReviewsSliceVariation = ReviewsSliceDefault;
+
+/**
+ * Reviews Shared Slice
+ *
+ * - **API ID**: `reviews`
+ * - **Description**: Customer reviews section with main image and testimonial carousel
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ReviewsSlice = prismic.SharedSlice<
+  "reviews",
+  ReviewsSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -1256,6 +1387,11 @@ declare module "@prismicio/client" {
       PlansSliceDefaultPrimary,
       PlansSliceVariation,
       PlansSliceDefault,
+      ReviewsSlice,
+      ReviewsSliceDefaultPrimaryReviewsItem,
+      ReviewsSliceDefaultPrimary,
+      ReviewsSliceVariation,
+      ReviewsSliceDefault,
     };
   }
 }

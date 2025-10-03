@@ -7,6 +7,7 @@ import Process from "@/slices/Process";
 import Testimonials from "@/slices/Testimonials";
 import CallToActionFull from "@/slices/CallToActionFull";
 import Plans from "@/slices/Plans";
+import Reviews from "@/slices/Reviews";
 import { SliceZoneType } from "@/types/slices";
 
 const components = {
@@ -18,6 +19,7 @@ const components = {
 	testimonials: Testimonials,
 	call_to_action_full: CallToActionFull,
 	plans: Plans,
+	reviews: Reviews,
 };
 
 export default function SliceZone({ slices }: { slices: SliceZoneType[] }) {

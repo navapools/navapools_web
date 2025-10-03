@@ -1,0 +1,93 @@
+{
+  "id": "reviews",
+  "type": "SharedSlice",
+  "name": "Reviews",
+  "description": "Customer reviews section with main image and testimonial carousel",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "imageUrl": "",
+      "primary": {
+        "section_title": {
+          "type": "Text",
+          "config": {
+            "label": "Section Title",
+            "placeholder": "Lo que dicen nuestros clientes"
+          }
+        },
+        "section_subtitle": {
+          "type": "Text",
+          "config": {
+            "label": "Section Subtitle",
+            "placeholder": "Testimonios reales de familias satisfechas"
+          }
+        },
+        "main_image": {
+          "type": "Image",
+          "config": {
+            "label": "Main Pool Image",
+            "constraint": {
+              "width": 800,
+              "height": 600
+            }
+          }
+        },
+        "reviews": {
+          "type": "Group",
+          "config": {
+            "label": "Reviews",
+            "fields": {
+              "pool_image": {
+                "type": "Image",
+                "config": {
+                  "label": "Pool Image",
+                  "constraint": {
+                    "width": 200,
+                    "height": 200
+                  }
+                }
+              },
+              "client_name": {
+                "type": "Text",
+                "config": {
+                  "label": "Client Name",
+                  "placeholder": "María González"
+                }
+              },
+              "rating": {
+                "type": "Number",
+                "config": {
+                  "label": "Rating (1-5)",
+                  "placeholder": "5"
+                }
+              },
+              "review_text": {
+                "type": "Text",
+                "config": {
+                  "label": "Review Text",
+                  "placeholder": "Excelente servicio, mi piscina nunca había estado tan limpia..."
+                }
+              },
+              "city": {
+                "type": "Text",
+                "config": {
+                  "label": "City",
+                  "placeholder": "Miami, FL"
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
+
+
+
+
