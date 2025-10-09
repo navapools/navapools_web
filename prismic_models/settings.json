@@ -1,0 +1,25 @@
+{
+  "Main": {
+    "uid": "settings",
+    "json": {
+      "title": "Settings",
+      "type": "Shared Slice",
+      "fieldset": "Settings",
+      "format": "custom",
+      "description": "Site-wide settings and SEO defaults",
+      "properties": {
+        "site_name": { "type": "Text", "config": { "label": "Site name" } },
+        "footer_text": { "type": "Text", "config": { "label": "Footer text" } },
+        "seo_title": { "type": "Text", "config": { "label": "SEO default title" } },
+        "seo_description": { "type": "Text", "config": { "label": "SEO default description" } },
+        "phone": { "type": "Text", "config": { "label": "Phone" } },
+        "contact_email": { "type": "Text", "config": { "label": "Contact email" } },
+        "street_address": { "type": "Text", "config": { "label": "Street address" } },
+        "postal_code": { "type": "Text", "config": { "label": "Postal code" } },
+        "latitude": { "type": "Text", "config": { "label": "Latitude" } },
+        "longitude": { "type": "Text", "config": { "label": "Longitude" } },
+        "opening_hours": { "type": "Text", "config": { "label": "Opening hours" } }
+      }
+    }
+  }
+}

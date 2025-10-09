@@ -113,3 +113,22 @@ export async function getPageByUID(locale: string, uid: string) {
         }
     }
 }
+
+export async function getAllPages(locale: string) {
+    const client = createClient();
+    const prismicLang = localeToPrismicLang(locale);
+
+    try {
+        // Traer todos los documentos de tipo `page` (paginados por si hay muchos)
+        const pages = await client.getAllByType('page', { lang: prismicLang });
+        return pages.map(p => ({
+            id: p.id,
+            uid: p.uid,
+            url: `/${locale}/${p.uid}`,
+            last_publication_date: p.last_publication_date || p.first_publication_date || null,
+        }));
+    } catch (error) {
+        console.warn('Error fetching all pages for sitemap:', error);
+        return [];
+    }
+}

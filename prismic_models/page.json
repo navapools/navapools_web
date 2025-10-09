@@ -1,0 +1,21 @@
+{
+  "Main": {
+    "uid": "page",
+    "json": {
+      "title": "Page",
+      "type": "Repeatable",
+      "fieldset": "Pages",
+      "format": "custom",
+      "description": "Content pages with SEO fields",
+      "properties": {
+        "title": { "type": "Text", "config": { "label": "Title" } },
+        "uid": { "type": "UID", "config": { "label": "UID" } },
+        "description": { "type": "Text", "config": { "label": "Meta description" } },
+        "seo_title": { "type": "Text", "config": { "label": "SEO title (optional)" } },
+        "seo_description": { "type": "Text", "config": { "label": "SEO description (optional)" } },
+        "noindex": { "type": "Boolean", "config": { "label": "Noindex (prevent indexing)" } },
+        "slices": { "type": "Slices", "config": { "labels": {} } }
+      }
+    }
+  }
+}

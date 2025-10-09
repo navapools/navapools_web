@@ -13,6 +13,31 @@
           "placeholder": "page-slug"
         }
       },
+      "description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta description",
+          "placeholder": "A short meta description for search engines"
+        }
+      },
+      "seo_title": {
+        "type": "Text",
+        "config": {
+          "label": "SEO title (optional)"
+        }
+      },
+      "seo_description": {
+        "type": "Text",
+        "config": {
+          "label": "SEO description (optional)"
+        }
+      },
+      "noindex": {
+        "type": "Boolean",
+        "config": {
+          "label": "Noindex (prevent indexing)"
+        }
+      },
       "title": {
         "type": "Text",
         "config": {
