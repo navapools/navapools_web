@@ -20,6 +20,20 @@ interface AlternateLanguage {
     lang?: string;
 }
 
+interface PrismicImage {
+    url?: string;
+    alt?: string;
+    dimensions?: { width?: number; height?: number };
+}
+
+interface PrismicPage {
+    id?: string;
+    uid?: string;
+    type?: string;
+    data?: PageData;
+    alternate_languages?: AlternateLanguage[];
+}
+
 interface PrismicPage {
     id?: string;
     uid?: string;
@@ -31,12 +45,11 @@ interface PrismicPage {
 export default async function LocaleHomePage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
     try {
-        const page = (await getPageByUID(locale, "nava-pools-page")) as PrismicPage | null;
+    const page = (await getPageByUID(locale, "nava-pools-page")) as PrismicPage | null;
 
-        // Verificar que sea un documento de tipo "page" antes de acceder a slices
-        const isPageDocument = page?.type === 'page';
-        const pageData = isPageDocument ? page?.data : null;
-        const sliceTypes = (pageData?.slices || []).map((s) => s.slice_type);
+    // Verificar que sea un documento de tipo "page" antes de acceder a slices
+    const isPageDocument = page?.type === 'page';
+    const pageData = isPageDocument ? page?.data : null;
 
         return <SliceZone slices={pageData?.slices || []} />;
     } catch (err) {
@@ -111,13 +124,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const { locale } = await params;
     try {
         const page = (await getPageByUID(locale, 'nava-pools-page')) as PrismicPage | null;
-        const isPage = page?.type === 'page';
-        const title = isPage ? (page.data?.title || 'NavaPools') : 'NavaPools';
-        const description = isPage ? (page.data?.description || 'Pool builders and services in Orlando, Florida.') : 'Pool builders and services in Orlando, Florida.';
+    const isPage = page?.type === 'page';
+    const pageData = isPage ? page.data : undefined;
+    const title = isPage ? (pageData?.title || 'NavaPools') : 'NavaPools';
+    const description = isPage ? (pageData?.description || 'Pool builders and services in Orlando, Florida.') : 'Pool builders and services in Orlando, Florida.';
         // Support multiple possible SEO fields that editors might use in Prismic
         const noindex = Boolean(page?.data?.noindex || page?.data?.seo?.noindex || page?.data?.meta?.noindex);
 
-        const alternates: Record<string, string> = {};
+    const alternates: Record<string, string> = {};
         // Use alternate_languages from Prismic to build hreflang map
         (page?.alternate_languages || []).forEach((alt: AlternateLanguage) => {
             const short = alt.lang ? alt.lang.split('-')[0] : alt.lang || '';
@@ -126,6 +140,67 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
         // Ensure current locale points to locale home
         alternates[locale] = `${SITE_URL}/${locale}`;
+
+        const makeAbsolute = (u?: string) => (u ? (u.startsWith('http') ? u : `${SITE_URL}${u.startsWith('/') ? '' : '/'}${u}`) : undefined);
+
+        // Try to find a social image in the document data or slices
+        const findSocialImage = (): { url: string; alt?: string; width?: number; height?: number } => {
+            if (pageData) {
+                // Prefer an explicit seo_image field if editors set it
+                const asRecord = pageData as unknown as Record<string, unknown>;
+                const seoCandidate = asRecord['seo_image'] as unknown;
+                if (seoCandidate && typeof seoCandidate === 'object' && 'url' in (seoCandidate as Record<string, unknown>)) {
+                    const img = seoCandidate as PrismicImage;
+                    return { url: makeAbsolute(img.url) || `${SITE_URL}/NavaPools_logo.png`, alt: img.alt || title, width: img.dimensions?.width, height: img.dimensions?.height };
+                }
+                // top-level image-like fields
+                const top = pageData as unknown as Record<string, unknown>;
+                for (const k of Object.keys(top)) {
+                    const v = top[k] as unknown;
+                    if (v && typeof v === 'object' && 'url' in (v as Record<string, unknown>)) {
+                        const img = v as PrismicImage;
+                        return { url: makeAbsolute(img.url) || `${SITE_URL}/NavaPools_logo.png`, alt: img.alt || title, width: img.dimensions?.width, height: img.dimensions?.height };
+                    }
+                }
+
+                // search slices for an image
+                const slices = pageData.slices as SliceZoneType[] | undefined;
+                if (Array.isArray(slices)) {
+                    for (const s of slices) {
+                        if (!s || typeof s !== 'object') continue;
+                        // primary image
+                        if (s.primary && typeof s.primary === 'object') {
+                            const p = s.primary as Record<string, unknown>;
+                            for (const key of Object.keys(p)) {
+                                const val = p[key] as unknown;
+                                if (val && typeof val === 'object' && 'url' in (val as Record<string, unknown>)) {
+                                    const img = val as PrismicImage;
+                                    return { url: makeAbsolute(img.url) || `${SITE_URL}/NavaPools_logo.png`, alt: img.alt || title, width: img.dimensions?.width, height: img.dimensions?.height };
+                                }
+                            }
+                        }
+                        // items images
+                        if (Array.isArray(s.items)) {
+                            for (const item of s.items) {
+                                if (!item || typeof item !== 'object') continue;
+                                for (const key of Object.keys(item)) {
+                                    const val = item[key] as unknown;
+                                    if (val && typeof val === 'object' && 'url' in (val as Record<string, unknown>)) {
+                                        const img = val as PrismicImage;
+                                        return { url: makeAbsolute(img.url) || `${SITE_URL}/NavaPools_logo.png`, alt: img.alt || title, width: img.dimensions?.width, height: img.dimensions?.height };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // fallback to site logo
+            return { url: `${SITE_URL}/NavaPools_logo.png`, alt: title, width: 1200, height: 630 };
+        };
+
+        const socialImage = findSocialImage();
 
         const metadata: Metadata = {
             title,
@@ -139,6 +214,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
                 description,
                 url: `${SITE_URL}/${locale}`,
                 siteName: 'NavaPools',
+                images: [
+                    {
+                        url: socialImage.url,
+                        alt: socialImage.alt,
+                        width: socialImage.width || 1200,
+                        height: socialImage.height || 630,
+                    },
+                ],
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title,
+                description,
+                images: [socialImage.url],
             },
             robots: noindex ? { index: false, follow: false } : { index: true, follow: true },
         };

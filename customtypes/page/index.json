@@ -32,6 +32,28 @@
           "label": "SEO description (optional)"
         }
       },
+      "seo_image": {
+        "type": "Image",
+        "config": {
+          "label": "Social / SEO Image",
+          "constraint": {
+            "width": 1200,
+            "height": 630
+          },
+          "placeholder": "Upload a social share image (1200x630 recommended)"
+        }
+      },
+      "seo_image_square": {
+        "type": "Image",
+        "config": {
+          "label": "Social / SEO Image (Square)",
+          "constraint": {
+            "width": 1080,
+            "height": 1080
+          },
+          "placeholder": "Upload a square social image (1080x1080 recommended)"
+        }
+      },
       "noindex": {
         "type": "Boolean",
         "config": {
