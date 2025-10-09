@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
 
   // Only apply rewrite for GET requests from recognized bots
   if (req.method === 'GET' && BOT_UA_RE.test(ua)) {
-    // preserve the original pathname + search so the API can fetch the correct Prismic document
+    // Rewrite bots to the dynamic OG API so they receive page-specific metadata.
     const original = req.nextUrl.pathname + (req.nextUrl.search || '');
     url.pathname = '/api/og';
     url.search = `originalPath=${encodeURIComponent(original)}`;

@@ -1,0 +1,52 @@
+<!doctype html>
+<!--
+  Fallback estático de Open Graph/Twitter para scrapers.
+  - Se sirve a crawlers mediante middleware (rewrite a /og.html) para evitar el 307.
+  - Para tener OG específicos por página, cambia la middleware para reescribir a
+    /api/og?originalPath=... y actualiza `src/app/api/og/route.ts` para consultar Prismic
+    y generar meta tags dinámicos (recomendado a medio plazo).
+-->
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <!-- Basic site metadata (fallback) -->
+    <title>Nava Pools — Soluciones de piscinas</title>
+    <meta name="description" content="Nava Pools — Soluciones y diseño de piscinas. Piscinas de calidad y servicio profesional." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Nava Pools" />
+    <meta property="og:title" content="Nava Pools — Soluciones de piscinas" />
+    <meta property="og:description" content="Nava Pools — Soluciones y diseño de piscinas. Piscinas de calidad y servicio profesional." />
+    <meta property="og:url" content="https://navapools.com/" />
+    <meta property="og:image" content="https://navapools.com/NavaPools_logo.png" />
+    <!-- optional: add width/height if known -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Nava Pools - logo" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nava Pools — Soluciones de piscinas" />
+    <meta name="twitter:description" content="Nava Pools — Soluciones y diseño de piscinas. Piscinas de calidad y servicio profesional." />
+    <meta name="twitter:image" content="https://navapools.com/NavaPools_logo.png" />
+    <meta name="twitter:image:alt" content="Nava Pools - logo" />
+
+    <link rel="canonical" href="https://navapools.com/" />
+    <meta name="robots" content="index,follow" />
+  </head>
+  <body>
+    <main>
+      <h1>Nava Pools</h1>
+      <p>Fallback Open Graph estático. Para OG por página, configura la ruta dinámica con Prismic.</p>
+      <p>Instrucciones rápidas:
+        <ul>
+          <li>Cambiar middleware para reescribir bots a <code>/api/og?originalPath=...</code>.</li>
+          <li>Actualizar <code>src/app/api/og/route.ts</code> para consultar Prismic y emitir OG por página.</li>
+        </ul>
+      </p>
+    </main>
+  </body>
+</html>
