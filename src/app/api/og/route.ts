@@ -43,6 +43,52 @@ export async function GET(req: NextRequest) {
     const settings = await getSettings(locale || 'en');
     if (settings?.data?.site_name) title = settings.data.site_name;
 
+    // helper to ensure image URLs are absolute
+    const makeAbsolute = (u?: string) => {
+      if (!u) return undefined;
+      return u.startsWith('http') ? u : `${siteUrl}${u.startsWith('/') ? '' : '/'}${u}`;
+    };
+
+    // If no UID provided but a locale is present, attempt to load the locale home page
+    // (the app's locale home uses the UID `nava-pools-page`). This ensures bots
+    // requesting `/`, `/en` or `/es` receive the same metadata as real users.
+    if (!uid) {
+      try {
+        const homePage = await getPageByUID(locale || 'en', 'nava-pools-page');
+        if (homePage) {
+          const pdRaw = (homePage as unknown as { data?: unknown }).data;
+          const pd = (pdRaw && typeof pdRaw === 'object') ? pdRaw as Record<string, unknown> : {} as Record<string, unknown>;
+
+          const tVal = pd['title'];
+          if (typeof tVal === 'string') title = tVal;
+          const dVal = pd['description'];
+          if (typeof dVal === 'string') description = dVal;
+
+          // Prefer explicit seo_image / seo_image_square on the home page as well
+          const seoImgVal = pd['seo_image'];
+          if (seoImgVal && typeof seoImgVal === 'object') {
+            const seoImg = seoImgVal as Record<string, unknown>;
+            const urlVal = seoImg['url'];
+            if (typeof urlVal === 'string') {
+              image = makeAbsolute(urlVal) || image;
+              const altVal = seoImg['alt'];
+              if (typeof altVal === 'string') imageAlt = altVal;
+              const dims = seoImg['dimensions'];
+              if (dims && typeof dims === 'object') {
+                const dimsRec = dims as Record<string, unknown>;
+                const w = dimsRec['width'];
+                const h = dimsRec['height'];
+                if (typeof w === 'number') imageWidth = w;
+                if (typeof h === 'number') imageHeight = h;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        // ignore — fall back to defaults
+      }
+    }
+
     if (uid) {
       const page = await getPageByUID(locale || 'en', uid);
       if (page) {
@@ -59,7 +105,7 @@ export async function GET(req: NextRequest) {
           const seoImg = seoImgVal as Record<string, unknown>;
           const urlVal = seoImg['url'];
           if (typeof urlVal === 'string') {
-            image = urlVal;
+            image = makeAbsolute(urlVal) || image;
             const altVal = seoImg['alt'];
             if (typeof altVal === 'string') imageAlt = altVal;
             const dims = seoImg['dimensions'];
@@ -77,7 +123,7 @@ export async function GET(req: NextRequest) {
             const sq = seoSquareVal as Record<string, unknown>;
             const urlVal = sq['url'];
             if (typeof urlVal === 'string') {
-              image = urlVal;
+              image = makeAbsolute(urlVal) || image;
               const altVal = sq['alt'];
               if (typeof altVal === 'string') imageAlt = altVal;
               const dims = sq['dimensions'];
@@ -103,7 +149,7 @@ export async function GET(req: NextRequest) {
                       const valRec = val as Record<string, unknown>;
                       const urlVal = valRec['url'];
                       if (typeof urlVal === 'string') {
-                        image = urlVal;
+                        image = makeAbsolute(urlVal) || image;
                         const altVal = valRec['alt'];
                         if (typeof altVal === 'string') imageAlt = altVal;
                         const dims = valRec['dimensions'];
@@ -140,6 +186,7 @@ export async function GET(req: NextRequest) {
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta property="og:locale" content="${escapeHtml(locale || 'en')}" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="${escapeHtml(title)}" />
     <meta property="og:title" content="${escapeHtml(title)}" />
