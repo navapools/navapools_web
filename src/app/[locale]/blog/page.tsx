@@ -4,13 +4,13 @@ import Link from 'next/link';
 export const revalidate = 60; // cache for 60s
 
 export default async function BlogListPage(props: unknown) {
-    const { params } = props as { params: { locale: string } };
-    const { locale } = params;
+    const { params } = props as { params: Promise<{ locale: string }> };
+    const { locale } = await params;
     const blogsRaw = await getAllBlogs(locale) as unknown[];
     const blogs = blogsRaw || [];
 
     return (
-        <main className="max-w-4xl mx-auto p-6">
+        <main className="max-w-4xl mx-auto p-6 pt-28 md:pt-32">
             <h1 className="text-3xl font-bold mb-4">Blog</h1>
             <ul className="space-y-4">
                 {blogs.map((b: unknown) => {

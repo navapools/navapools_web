@@ -18,7 +18,7 @@ export default async function BlogDetail(props: unknown) {
     const subtitle = Array.isArray(data['subtitle']) ? ((data['subtitle'] as Array<Record<string, unknown>>)[0]?.text as string) || '' : (data['subtitle'] as string) || '';
 
     return (
-        <main className="max-w-3xl mx-auto p-6">
+        <main className="max-w-3xl mx-auto p-6 pt-28 md:pt-32">
             <h1 className="text-3xl font-bold mb-2">{title}</h1>
             {subtitle && <h2 className="text-lg text-neutral-600 mb-4">{subtitle}</h2>}
 
