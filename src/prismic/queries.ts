@@ -132,3 +132,63 @@ export async function getAllPages(locale: string) {
         return [];
     }
 }
+
+// --- Blog helpers ---
+export async function getAllBlogs(locale: string) {
+    const client = createClient();
+    const prismicLang = localeToPrismicLang(locale);
+
+    try {
+        // getAllByType may not include 'blog' in generated types; use unknown and safe accessors
+    const docs = await (client as unknown as { getAllByType: (type: string, opts?: unknown) => Promise<unknown[]> }).getAllByType('blog', { lang: prismicLang });
+        // map to basic shape used by the list page
+        return (docs || []).map((d: unknown) => {
+            const doc = d as Record<string, unknown>;
+            const data = (doc.data as Record<string, unknown>) || {};
+            const title = Array.isArray(data.title) ? data.title[0]?.text : data.title;
+            const subtitle = Array.isArray(data.subtitle) ? data.subtitle[0]?.text : data.subtitle;
+            const excerpt = Array.isArray(data.excerpt) ? data.excerpt[0]?.text : data.excerpt;
+            const docRec = doc as Record<string, unknown>;
+            return {
+                id: String(docRec['id'] || ''),
+                uid: String(docRec['uid'] || ''),
+                title: title || '',
+                subtitle: subtitle || '',
+                excerpt: excerpt || '',
+                url: `/${locale}/blog/${String(docRec['uid'] || '')}`,
+                last_publication_date: (docRec['last_publication_date'] as string) || (docRec['first_publication_date'] as string) || null,
+            };
+        });
+    } catch (error) {
+        console.warn('Error fetching blogs from Prismic:', error);
+        return [];
+    }
+}
+
+export async function getBlogByUID(locale: string, uid: string) {
+    const client = createClient();
+    const prismicLang = localeToPrismicLang(locale);
+
+    try {
+    const post = await (client as unknown as { getByUID: (type: string, uid: string, opts?: unknown) => Promise<unknown> }).getByUID('blog', uid, { lang: prismicLang });
+    return post as unknown;
+    } catch (error) {
+        console.warn('Could not find blog in requested language, trying alternates...', error);
+        try {
+            const englishPost = await (client as unknown as { getByUID: (type: string, uid: string, opts?: unknown) => Promise<unknown> }).getByUID('blog', uid, { lang: 'en-us' });
+            const englishRec = englishPost as Record<string, unknown> | null;
+            const alternates = englishRec?.alternate_languages as Array<Record<string, unknown>> | undefined;
+            if (alternates && alternates.length > 0) {
+                const alternate = alternates.find(alt => (alt.lang as string) === prismicLang && (alt.type as string) === 'blog');
+                if (alternate && alternate.id) {
+                    const localized = await (client as unknown as { getByID: (id: string) => Promise<unknown> }).getByID(alternate.id as string);
+                    return localized;
+                }
+            }
+            return englishPost;
+        } catch (inner) {
+            console.error('Error fetching any version of blog:', inner);
+            throw inner;
+        }
+    }
+}

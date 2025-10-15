@@ -58,14 +58,21 @@ export default function HamburgerMenu({ items, locale }: HamburgerMenuProps) {
                             className="text-white text-lg hover:text-gray-300 transition-colors"
                             onClick={() => setIsOpen(false)}
                         >
-                            Home
+                            {locale === 'es' ? 'Inicio' : 'Home'}
                         </Link>
                         <Link 
                             href={`/${locale}/contact`} 
                             className="text-white text-lg hover:text-gray-300 transition-colors"
                             onClick={() => setIsOpen(false)}
                         >
-                            Contact
+                            {locale === 'es' ? 'Contacto' : 'Contact'}
+                        </Link>
+                        <Link 
+                            href={`/${locale}/blog`} 
+                            className="text-white text-lg hover:text-gray-300 transition-colors"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            {locale === 'es' ? 'Blog' : 'Blog'}
                         </Link>
                         {items.map((item, i) => (
                             item.link?.url && (

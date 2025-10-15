@@ -84,7 +84,7 @@ export async function GET(req: NextRequest) {
             }
           }
         }
-      } catch (err) {
+      } catch {
         // ignore — fall back to defaults
       }
     }
@@ -177,9 +177,9 @@ export async function GET(req: NextRequest) {
         if (typeof metaDesc === 'string') description = metaDesc;
       }
     }
-  } catch (err) {
+  } catch {
     // swallow errors — fallbacks already set
-    console.warn('OG API: error fetching Prismic data', err);
+    console.warn('OG API: error fetching Prismic data');
   }
 
   const html = `<!doctype html>

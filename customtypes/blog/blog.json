@@ -1,0 +1,19 @@
+{
+  "Main": {
+    "uid": "blog",
+    "json": {
+      "title": "Blog",
+      "type": "Repeatable",
+      "fieldset": "Blogs",
+      "format": "custom",
+      "description": "Blog posts (title, subtitle, excerpt, body slices)",
+      "properties": {
+        "title": { "type": "Text", "config": { "label": "Title" } },
+        "uid": { "type": "UID", "config": { "label": "UID" } },
+        "subtitle": { "type": "Text", "config": { "label": "Subtitle (optional)" } },
+        "excerpt": { "type": "Text", "config": { "label": "Excerpt (optional)" } },
+        "body": { "type": "Slices", "config": { "labels": {} } }
+      }
+    }
+  }
+}

@@ -6,8 +6,8 @@ import createMiddleware from 'next-intl/middleware';
 const BOT_UA_RE = /facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp|Slackbot|TelegramBot/i;
 
 const nextIntl = createMiddleware({
-  locales: ['en-us', 'es-us'],
-  defaultLocale: 'en-us',
+  locales: ['en', 'es'],
+  defaultLocale: 'en',
   localePrefix: 'always',
 });
 

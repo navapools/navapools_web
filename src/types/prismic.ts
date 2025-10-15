@@ -19,3 +19,17 @@ export interface Navigation {
 export interface Settings {
     data: SettingsData;
 }
+
+interface BlogData {
+    title: unknown;
+    subtitle?: unknown;
+    excerpt?: unknown;
+    body?: unknown;
+}
+
+export interface Blog {
+    id: string;
+    uid?: string;
+    data: BlogData;
+    last_publication_date?: string | null;
+}

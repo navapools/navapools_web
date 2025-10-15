@@ -1,0 +1,54 @@
+{
+  "id": "blog",
+  "label": "Blog",
+  "repeatable": true,
+  "status": true,
+  "format": "custom",
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": { "label": "UID", "placeholder": "blog-slug" }
+      },
+      "title": {
+        "type": "Text",
+        "config": { "label": "Title", "placeholder": "Enter title..." }
+      },
+      "subtitle": {
+        "type": "Text",
+        "config": { "label": "Subtitle (optional)", "placeholder": "Enter subtitle..." }
+      },
+      "excerpt": {
+        "type": "Text",
+        "config": { "label": "Excerpt (optional)", "placeholder": "Short excerpt for list/SEO" }
+      },
+      "body": {
+        "type": "Slices",
+        "fieldset": "Body",
+        "config": {
+          "choices": {
+            "paragraph": {
+              "type": "Slice",
+              "fieldset": "Paragraph",
+              "display": "list",
+              "non-repeat": {
+                "text": { "type": "StructuredText", "config": { "multi": "paragraph" } }
+              },
+              "repeat": {}
+            },
+            "image": {
+              "type": "Slice",
+              "fieldset": "Image",
+              "display": "list",
+              "non-repeat": {
+                "image": { "type": "Image", "config": { "label": "Image" } },
+                "caption": { "type": "Text", "config": { "label": "Caption (optional)" } }
+              },
+              "repeat": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

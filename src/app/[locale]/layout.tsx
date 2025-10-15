@@ -13,8 +13,8 @@ import HamburgerMenu from "@/components/HamburgerMenu";
 
 const DEFAULT_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://navapools.com';
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-    const { locale } = params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
     // Use Prismic settings when available to populate title/description
     let settings: Settings = { data: { site_name: 'NavaPools', footer_text: '' } };
     try {

@@ -1,7 +1,8 @@
 {
 	"nav": {
 		"home": "Home",
-		"contact": "Contact"
+		"contact": "Contact",
+		"blog": "Blog"
 	},
 	"hero": {
 		"title": "Welcome to NavaPools",
