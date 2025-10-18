@@ -1,0 +1,64 @@
+{
+  "id": "contact",
+  "label": "Contact",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "title": {
+        "type": "Text",
+        "config": { "label": "Title", "placeholder": "Contact" }
+      },
+      "subtitle": {
+        "type": "Text",
+        "config": { "label": "Subtitle", "placeholder": "Get in touch" }
+      },
+      "name_placeholder": {
+        "type": "Text",
+        "config": { "label": "Name placeholder", "placeholder": "Name" }
+      },
+      "email_placeholder": {
+        "type": "Text",
+        "config": { "label": "Email placeholder", "placeholder": "Email" }
+      },
+      "message_placeholder": {
+        "type": "Text",
+        "config": { "label": "Message placeholder", "placeholder": "Message" }
+      },
+      "submit_label": {
+        "type": "Text",
+        "config": { "label": "Submit button label", "placeholder": "Send" }
+      },
+      "description": {
+        "type": "Text",
+        "config": { "label": "Page description", "placeholder": "Contact page description" }
+      },
+      "success_title": {
+        "type": "Text",
+        "config": { "label": "Success title", "placeholder": "Message sent!" }
+      },
+      "success_message": {
+        "type": "Text",
+        "config": { "label": "Success message", "placeholder": "Thank you for contacting us. We'll get back to you soon." }
+      },
+      "error_message": {
+        "type": "Text",
+        "config": { "label": "Error message", "placeholder": "Error sending message. Please try again." }
+      },
+      "seo_title": {
+        "type": "Text",
+        "config": { "label": "SEO Title", "placeholder": "Contact | NavaPools" }
+      },
+      "seo_description": {
+        "type": "Text",
+        "config": { "label": "SEO Description", "placeholder": "Get in touch with NavaPools for quotes and services in Orlando, FL." }
+      },
+      "seo_image": {
+        "type": "Image",
+        "config": { "label": "SEO/Open Graph Image" }
+      }
+    }
+  },
+  "format": "custom"
+}
+

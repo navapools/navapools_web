@@ -165,6 +165,51 @@ export async function getAllBlogs(locale: string) {
     }
 }
 
+// --- Contact (single) ---
+export async function getContact(locale: string) {
+    try {
+        const client = createClient();
+        const result = await client.getSingle('contact', { lang: localeToPrismicLang(locale) });
+        const data = result?.data as any;
+        return {
+            title: data?.title || 'Contact',
+            subtitle: data?.subtitle || '',
+            description: data?.description || '',
+            name_placeholder: data?.name_placeholder || 'Name *',
+            email_placeholder: data?.email_placeholder || 'Email *',
+            message_placeholder: data?.message_placeholder || 'Message *',
+            submit_label: data?.submit_label || 'Send',
+            success_title: data?.success_title || 'Message sent!',
+            success_message: data?.success_message || "Thank you for contacting us. We'll get back to you soon.",
+            error_message: data?.error_message || 'Error sending message. Please try again.',
+            seo: {
+                title: data?.seo_title || data?.title || 'Contact',
+                description: data?.seo_description || data?.description || '',
+                imageUrl: data?.seo_image?.url || `${process.env.NEXT_PUBLIC_SITE_URL || 'https://navapools.com'}/NavaPools_logo.png`
+            }
+        };
+    } catch (error) {
+        console.warn('Contact not found in Prismic, using defaults:', error);
+        return {
+            title: 'Contact',
+            subtitle: '',
+            description: '',
+            name_placeholder: 'Name *',
+            email_placeholder: 'Email *',
+            message_placeholder: 'Message *',
+            submit_label: 'Send',
+            success_title: 'Message sent!',
+            success_message: "Thank you for contacting us. We'll get back to you soon.",
+            error_message: 'Error sending message. Please try again.',
+            seo: {
+                title: 'Contact | NavaPools',
+                description: 'Get in touch with NavaPools for quotes and services in Orlando, FL.',
+                imageUrl: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://navapools.com'}/NavaPools_logo.png`
+            }
+        };
+    }
+}
+
 export async function getBlogByUID(locale: string, uid: string) {
     const client = createClient();
     const prismicLang = localeToPrismicLang(locale);

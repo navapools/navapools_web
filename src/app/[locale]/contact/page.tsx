@@ -1,46 +1,35 @@
-"use client";
-import { useState } from "react";
+import { getContact } from "@/prismic/queries";
+import type { Metadata } from "next";
+import ContactForm from "./ContactForm";
 
-export default function ContactPage() {
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [message, setMessage] = useState("");
-	const [status, setStatus] = useState<string | null>(null);
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+	const { locale } = await params;
+	const c = await getContact(locale);
+	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://navapools.com';
+	return {
+		title: c.seo.title,
+		description: c.seo.description,
+		openGraph: {
+			title: c.seo.title,
+			description: c.seo.description,
+			url: `${baseUrl}/${locale}/contact`,
+			type: 'website',
+			images: [{ url: c.seo.imageUrl, width: 1200, height: 630, alt: c.seo.title }]
+		},
+		twitter: { card: 'summary_large_image', title: c.seo.title, description: c.seo.description }
+	};
+}
 
-	async function onSubmit(e: React.FormEvent) {
-		e.preventDefault();
-		setStatus(null);
-		try {
-			const res = await fetch("/api/contact", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ name, email, message }),
-			});
-			if (res.ok) {
-				setStatus("OK");
-				setName("");
-				setEmail("");
-				setMessage("");
-			} else {
-				setStatus("ERROR");
-			}
-		} catch (error) {
-			console.error('Error sending message:', error);
-			setStatus("ERROR");
-		}
-	}
+export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
+	const { locale } = await params;
+	const contactCopy = await getContact(locale);
 
 	return (
 		<div className="max-w-xl mx-auto p-6">
-			<h1 className="text-2xl font-semibold mb-4">Contact</h1>
-			<form className="space-y-4" onSubmit={onSubmit}>
-				<input className="w-full border p-2 rounded" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-				<input className="w-full border p-2 rounded" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-				<textarea className="w-full border p-2 rounded" placeholder="Message" rows={6} value={message} onChange={(e) => setMessage(e.target.value)} />
-				<button className="px-4 py-2 rounded bg-black text-white" type="submit">Send</button>
-			</form>
-			{status === "OK" && <p className="text-green-600 mt-3">Sent!</p>}
-			{status === "ERROR" && <p className="text-red-600 mt-3">Error. Try again.</p>}
+			<h1 className="text-2xl font-semibold mb-1">{contactCopy.title}</h1>
+			{contactCopy.subtitle ? (<p className="text-neutral-500 mb-4">{contactCopy.subtitle}</p>) : null}
+			{contactCopy.description ? (<p className="text-gray-600 mb-6">{contactCopy.description}</p>) : null}
+			<ContactForm locale={locale} copy={contactCopy} />
 		</div>
 	);
 }

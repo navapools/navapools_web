@@ -1,26 +1,78 @@
 import { NextResponse } from "next/server";
-import sendgrid from "@sendgrid/mail";
+import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
-if (process.env.SENDGRID_API_KEY) {
-	sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
-}
+const mailerSend = new MailerSend({ apiKey: process.env.MAILERSEND_TOKEN || "" });
 
 export async function POST(request: Request) {
 	try {
-		const body = await request.json();
-		const { name, email, message } = body || {};
+        const body = await request.json();
+        console.log('Contact API payload:', body);
+        const { name, email, message, locale } = body || {};
 
-		if (!name || !email || !message) {
-			return NextResponse.json({ error: "Missing fields" }, { status: 400 });
-		}
+        const trimmedEmail = typeof email === "string" ? email.trim() : "";
+        const trimmedMessage = typeof message === "string" ? message.trim() : "";
+        const trimmedName = typeof name === "string" ? name.trim() : "";
 
-		await sendgrid.send({
-			from: process.env.SENDGRID_FROM as string,
-			to: process.env.SENDGRID_TO as string,
-			subject: `Website contact from ${name}`,
-			replyTo: email,
-			html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p>${message}</p>`,
-		});
+        if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+            return NextResponse.json({ error: "Name, email and message are required", received: body }, { status: 400 });
+        }
+
+
+        const adminFrom = process.env.SENDGRID_FROM as string;
+        if (!process.env.MAILERSEND_TOKEN) {
+            return NextResponse.json({ error: "MAILERSEND_TOKEN is missing" }, { status: 500 });
+        }
+        if (!process.env.MAILERSEND_FROM) {
+            return NextResponse.json({ error: "MAILERSEND_FROM is missing. Set it to a verified domain email in MailerSend (e.g., no-reply@yourdomain.com)." }, { status: 500 });
+        }
+
+        const subjectAdmin = `Website contact from ${trimmedName}`;
+        const htmlAdmin = `
+            <table style="border-collapse:collapse;width:100%" border="1" cellpadding="8">
+                <tr><th align="left">Name</th><td>${trimmedName}</td></tr>
+                <tr><th align="left">Email</th><td>${trimmedEmail}</td></tr>
+                <tr><th align="left">Message</th><td>${String(trimmedMessage).replace(/\n/g, '<br/>')}</td></tr>
+            </table>
+        `;
+
+        const resolvedFrom = process.env.MAILERSEND_FROM as string; // must be verified in MailerSend
+        const sender = new Sender(resolvedFrom, "NavaPools");
+
+        // 1) Send to admin inbox
+        const adminEmailParams = new EmailParams()
+            .setFrom(sender)
+            .setTo([new Recipient(process.env.MAILERSEND_ADMIN_TO || adminFrom || resolvedFrom)])
+            .setSubject(subjectAdmin)
+            .setHtml(htmlAdmin)
+            .setReplyTo(new Sender(trimmedEmail, trimmedName));
+
+        try {
+            await mailerSend.email.send(adminEmailParams);
+        } catch (err: any) {
+            console.error('MailerSend admin email error:', err?.response || err);
+            return NextResponse.json({ error: "MailerSend admin email failed", details: err?.response || String(err) }, { status: 500 });
+        }
+
+        // 2) Confirmation to user (localized)
+        const isSpanish = (locale || "en").startsWith("es");
+        const subjectUser = isSpanish ? "Hemos recibido tu mensaje" : "We received your message";
+        const bodyUser = isSpanish
+            ? `Hola ${safeName},<br/><br/>Gracias por contactarnos. Tu mensaje fue recibido y nuestro equipo te contactará pronto.<br/><br/>Saludos,<br/>NavaPools`
+            : `Hi ${safeName},<br/><br/>Thanks for reaching out. We received your message and our team will contact you shortly.<br/><br/>Best regards,<br/>NavaPools`;
+
+        const userEmailParams = new EmailParams()
+            .setFrom(sender)
+            .setTo([new Recipient(trimmedEmail, safeName || undefined)])
+            .setSubject(subjectUser)
+            .setHtml(bodyUser);
+
+        // User confirmation email disabled as requested
+        // try {
+        //     await mailerSend.email.send(userEmailParams);
+        // } catch (err: any) {
+        //     console.error('MailerSend user email error:', err?.response || err);
+        //     return NextResponse.json({ error: "MailerSend user email failed", details: err?.response || String(err) }, { status: 500 });
+        // }
 
 		return NextResponse.json({ ok: true });
 	} catch (error) {
