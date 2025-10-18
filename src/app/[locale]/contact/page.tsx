@@ -7,16 +7,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 	const c = await getContact(locale);
 	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://navapools.com';
 	return {
-		title: c.seo.title,
-		description: c.seo.description,
+		title: c.seo.title || 'Contact',
+		description: c.seo.description || '',
 		openGraph: {
-			title: c.seo.title,
-			description: c.seo.description,
+			title: c.seo.title || 'Contact',
+			description: c.seo.description || '',
 			url: `${baseUrl}/${locale}/contact`,
 			type: 'website',
-			images: [{ url: c.seo.imageUrl, width: 1200, height: 630, alt: c.seo.title }]
+			images: [{ url: c.seo.imageUrl, width: 1200, height: 630, alt: c.seo.title || 'Contact' }]
 		},
-		twitter: { card: 'summary_large_image', title: c.seo.title, description: c.seo.description }
+		twitter: { card: 'summary_large_image', title: c.seo.title || 'Contact', description: c.seo.description || '' }
 	};
 }
 

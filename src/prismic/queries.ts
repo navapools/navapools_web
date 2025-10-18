@@ -169,23 +169,23 @@ export async function getAllBlogs(locale: string) {
 export async function getContact(locale: string) {
     try {
         const client = createClient();
-        const result = await client.getSingle('contact', { lang: localeToPrismicLang(locale) });
-        const data = result?.data as any;
+        const result = await (client as unknown as { getSingle: (type: string, opts?: unknown) => Promise<unknown> }).getSingle('contact', { lang: localeToPrismicLang(locale) });
+        const data = (result as { data?: Record<string, unknown> })?.data as Record<string, unknown>;
         return {
-            title: data?.title || 'Contact',
-            subtitle: data?.subtitle || '',
-            description: data?.description || '',
-            name_placeholder: data?.name_placeholder || 'Name *',
-            email_placeholder: data?.email_placeholder || 'Email *',
-            message_placeholder: data?.message_placeholder || 'Message *',
-            submit_label: data?.submit_label || 'Send',
-            success_title: data?.success_title || 'Message sent!',
-            success_message: data?.success_message || "Thank you for contacting us. We'll get back to you soon.",
-            error_message: data?.error_message || 'Error sending message. Please try again.',
+            title: (data?.title as string) || 'Contact',
+            subtitle: (data?.subtitle as string) || '',
+            description: (data?.description as string) || '',
+            name_placeholder: (data?.name_placeholder as string) || 'Name *',
+            email_placeholder: (data?.email_placeholder as string) || 'Email *',
+            message_placeholder: (data?.message_placeholder as string) || 'Message *',
+            submit_label: (data?.submit_label as string) || 'Send',
+            success_title: (data?.success_title as string) || 'Message sent!',
+            success_message: (data?.success_message as string) || "Thank you for contacting us. We'll get back to you soon.",
+            error_message: (data?.error_message as string) || 'Error sending message. Please try again.',
             seo: {
-                title: data?.seo_title || data?.title || 'Contact',
-                description: data?.seo_description || data?.description || '',
-                imageUrl: data?.seo_image?.url || `${process.env.NEXT_PUBLIC_SITE_URL || 'https://navapools.com'}/NavaPools_logo.png`
+                title: (data?.seo_title as string) || (data?.title as string) || 'Contact',
+                description: (data?.seo_description as string) || (data?.description as string) || '',
+                imageUrl: (data?.seo_image as { url?: string })?.url || `${process.env.NEXT_PUBLIC_SITE_URL || 'https://navapools.com'}/NavaPools_logo.png`
             }
         };
     } catch (error) {

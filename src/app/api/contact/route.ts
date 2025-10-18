@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 	try {
         const body = await request.json();
         console.log('Contact API payload:', body);
-        const { name, email, message, locale } = body || {};
+        const { name, email, message } = body || {};
 
         const trimmedEmail = typeof email === "string" ? email.trim() : "";
         const trimmedMessage = typeof message === "string" ? message.trim() : "";
@@ -48,25 +48,24 @@ export async function POST(request: Request) {
 
         try {
             await mailerSend.email.send(adminEmailParams);
-        } catch (err: any) {
-            console.error('MailerSend admin email error:', err?.response || err);
-            return NextResponse.json({ error: "MailerSend admin email failed", details: err?.response || String(err) }, { status: 500 });
+        } catch (err: unknown) {
+            console.error('MailerSend admin email error:', err);
+            return NextResponse.json({ error: "MailerSend admin email failed", details: String(err) }, { status: 500 });
         }
 
-        // 2) Confirmation to user (localized)
-        const isSpanish = (locale || "en").startsWith("es");
-        const subjectUser = isSpanish ? "Hemos recibido tu mensaje" : "We received your message";
-        const bodyUser = isSpanish
-            ? `Hola ${safeName},<br/><br/>Gracias por contactarnos. Tu mensaje fue recibido y nuestro equipo te contactará pronto.<br/><br/>Saludos,<br/>NavaPools`
-            : `Hi ${safeName},<br/><br/>Thanks for reaching out. We received your message and our team will contact you shortly.<br/><br/>Best regards,<br/>NavaPools`;
-
-        const userEmailParams = new EmailParams()
-            .setFrom(sender)
-            .setTo([new Recipient(trimmedEmail, safeName || undefined)])
-            .setSubject(subjectUser)
-            .setHtml(bodyUser);
+        // 2) Confirmation to user (localized) - DISABLED
+        // const isSpanish = (locale || "en").startsWith("es");
+        // const subjectUser = isSpanish ? "Hemos recibido tu mensaje" : "We received your message";
+        // const bodyUser = isSpanish
+        //     ? `Hola ${trimmedName},<br/><br/>Gracias por contactarnos. Tu mensaje fue recibido y nuestro equipo te contactará pronto.<br/><br/>Saludos,<br/>NavaPools`
+        //     : `Hi ${trimmedName},<br/><br/>Thanks for reaching out. We received your message and our team will contact you shortly.<br/><br/>Best regards,<br/>NavaPools`;
 
         // User confirmation email disabled as requested
+        // const userEmailParams = new EmailParams()
+        //     .setFrom(sender)
+        //     .setTo([new Recipient(trimmedEmail, trimmedName || undefined)])
+        //     .setSubject(subjectUser)
+        //     .setHtml(bodyUser);
         // try {
         //     await mailerSend.email.send(userEmailParams);
         // } catch (err: any) {
