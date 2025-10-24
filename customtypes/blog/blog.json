@@ -12,6 +12,9 @@
         "uid": { "type": "UID", "config": { "label": "UID" } },
         "subtitle": { "type": "Text", "config": { "label": "Subtitle (optional)" } },
         "excerpt": { "type": "Text", "config": { "label": "Excerpt (optional)" } },
+        "background_image": { "type": "Image", "config": { "label": "Background Image (optional)" } },
+        "video_url": { "type": "Link", "config": { "label": "Background Video URL (optional)", "placeholder": "Enter the ImageKit.io video URL" } },
+        "mobile_video_url": { "type": "Link", "config": { "label": "Mobile Background Video URL (optional)", "placeholder": "Enter the ImageKit.io mobile video URL" } },
         "body": { "type": "Slices", "config": { "labels": {} } }
       }
     }
