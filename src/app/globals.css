@@ -23,4 +23,59 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden; /* avoid horizontal scroll due to transforms on mobile */
+}
+
+/* Respect iOS safe areas while keeping reasonable base padding */
+.safe-px {
+  padding-left: max(1.25rem, env(safe-area-inset-left));
+  padding-right: max(1.25rem, env(safe-area-inset-right));
+}
+
+/* Reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  transition-property: opacity, transform;
+  transition-duration: 700ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal-left {
+  transform: translate3d(-24px, 0, 0);
+}
+
+.reveal-right {
+  transform: translate3d(24px, 0, 0);
+}
+
+.reveal-up {
+  transform: translate3d(0, 24px, 0);
+}
+
+.reveal-down {
+  transform: translate3d(0, -24px, 0);
+}
+
+.reveal-fade {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Smaller motion on mobile to avoid layout jitter */
+@media (max-width: 640px) {
+  .reveal-left { transform: translate3d(-12px, 0, 0); }
+  .reveal-right { transform: translate3d(12px, 0, 0); }
+  .reveal-up { transform: translate3d(0, 12px, 0); }
+  .reveal-down { transform: translate3d(0, -12px, 0); }
+}
+
+/* Make sure the visible state wins over direction offsets */
+.reveal.reveal-visible {
+  transform: translate3d(0, 0, 0);
 }

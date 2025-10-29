@@ -369,7 +369,7 @@ export default function Reviews({ slice }: SliceComponentProps) {
                 </div>
 
                 {/* Debug button */}
-                <div className="absolute top-4 left-4 z-50">
+                {/* <div className="absolute top-4 left-4 z-50">
                   <button
                     onClick={() => {
                       console.log('Debug: Changing to next review');
@@ -379,7 +379,7 @@ export default function Reviews({ slice }: SliceComponentProps) {
                   >
                     Debug Next
                   </button>
-                </div>
+                </div> */}
 
                 {/* Navigation arrows */}
                 {reviews.length > 1 && (

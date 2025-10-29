@@ -2,6 +2,7 @@ import type { SliceComponentProps, PrismicImage, PrismicLink } from "@/types/sli
 import Image from "next/image";
 import Link from "next/link";
 import VideoBackground from "@/components/VideoBackground";
+import Reveal from "@/components/Reveal";
 
 interface VideoField {
 	url?: string;
@@ -60,31 +61,39 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
             <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/40 to-transparent" />
             
             {/* Content Container */}
-            <div className="relative z-10 container mx-auto px-4 md:px-8">
+            <div className="relative z-10 container mx-auto px-6 sm:px-8">
                 <div className="flex justify-start">
-                    <div className="max-w-xl text-left text-white">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                            {title}
-                        </h1>
-                        <p className="text-lg md:text-xl mb-8 text-gray-100">
-                            {subtitle}
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-start">
+                    <div className="w-full max-w-xl text-left text-white">
+                        <Reveal direction="left">
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                                {title}
+                            </h1>
+                        </Reveal>
+                        <Reveal direction="left" delayMs={120}>
+                            <p className="text-base sm:text-lg md:text-xl mb-8 text-gray-100">
+                                {subtitle}
+                            </p>
+                        </Reveal>
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start items-stretch w-full">
                             {primary_cta_text && (
-                                <Link 
-                                    href={{ pathname: primary_cta_link?.url || '#' }}
-                                    className="bg-indigo-700 hover:bg-indigo-800 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-300 text-center"
-                                >
-                                    {primary_cta_text}
-                                </Link>
+                                <Reveal direction="left" delayMs={200}>
+                                    <Link 
+                                        href={{ pathname: primary_cta_link?.url || '#' }}
+                                        className="block w-full sm:w-auto m-0 bg-indigo-700 hover:bg-indigo-800 text-white px-6 sm:px-8 py-4 rounded-lg font-semibold text-base sm:text-lg transition-colors duration-300 text-center"
+                                    >
+                                        {primary_cta_text}
+                                    </Link>
+                                </Reveal>
                             )}
                             {secondary_cta_text && (
-                                <Link 
-                                    href={{ pathname: secondary_cta_link?.url || '#' }}
-                                    className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-300 text-center border border-white/30"
-                                >
-                                    {secondary_cta_text}
-                                </Link>
+                                <Reveal direction="right" delayMs={260}>
+                                    <Link 
+                                        href={{ pathname: secondary_cta_link?.url || '#' }}
+                                        className="block w-full sm:w-auto m-0 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold px-6 sm:px-8 py-4 rounded-lg transition-colors duration-300 text-center border border-white/30"
+                                    >
+                                        {secondary_cta_text}
+                                    </Link>
+                                </Reveal>
                             )}
                         </div>
                     </div>
