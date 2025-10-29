@@ -1,6 +1,18 @@
 import { getPageByUID } from './queries';
 import type { PrismicImage, PrismicLink } from '@/types/slices';
 
+interface PrismicPageData {
+    slices?: Array<{
+        slice_type: string;
+        primary?: Record<string, unknown>;
+    }>;
+}
+
+interface PrismicPage {
+    type: string;
+    data?: PrismicPageData;
+}
+
 interface HeroBackgroundData {
     background_image?: PrismicImage;
     video_url?: string;
@@ -9,7 +21,7 @@ interface HeroBackgroundData {
 
 export async function getHeroBackgroundData(locale: string): Promise<HeroBackgroundData> {
     try {
-        const page = await getPageByUID(locale, "nava-pools-page");
+        const page = (await getPageByUID(locale, "nava-pools-page")) as PrismicPage;
         
         if (!page || page.type !== 'page' || !page.data?.slices) {
             return {};

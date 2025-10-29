@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import Image from "next/image";
+import Link from "next/link";
 import { ReactNode } from "react";
 import "../globals.css";
 import { getNavigation, getSettings } from "@/prismic/queries";
@@ -90,15 +91,17 @@ export default async function LocaleLayout({
             <div className="min-h-screen antialiased">
                 <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-4 gap-4">
                     <div className="flex items-center gap-3">
-                        <Image 
-                            src="/NavaPools_logo.png" 
-                            alt={settings.data.site_name || "NavaPools"} 
-                            width={350} 
-                            height={116}
-                            className="h-24 w-auto"
-                            priority
-                            unoptimized
-                        />
+                        <Link href={`/${locale}`} className="cursor-pointer hover:opacity-80 transition-opacity">
+                            <Image 
+                                src="/NavaPools_logo.png" 
+                                alt={settings.data.site_name || "NavaPools"} 
+                                width={350} 
+                                height={116}
+                                className="h-24 w-auto"
+                                priority
+                                unoptimized
+                            />
+                        </Link>
                     </div>
                     <HamburgerMenu items={nav.data.items || []} locale={locale} />
                 </header>

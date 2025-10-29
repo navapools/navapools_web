@@ -108,8 +108,24 @@ export async function getPageByUID(locale: string, uid: string) {
             });
             return englishPage;
         } catch (innerError) {
-            console.error('Error fetching any version of the page:', innerError);
-            throw innerError;
+            console.warn('Fallback by UID failed. Trying broader search by type/UID across languages...', innerError);
+
+            try {
+                // Buscar por UID en cualquier idioma y devolver el primero disponible
+                const anyLang = await client.getAllByType('page');
+                const match = (anyLang || []).find((d: unknown) => {
+                    const doc = d as { uid?: string };
+                    return (doc.uid || '').toLowerCase() === uid.toLowerCase();
+                });
+                if (match) {
+                    return match as unknown;
+                }
+            } catch (widerError) {
+                console.warn('Broad search failed:', widerError);
+            }
+
+            // Como último recurso, no lanzar error duro: devolver null para que la ruta 404e elegantemente
+            return null as unknown;
         }
     }
 }

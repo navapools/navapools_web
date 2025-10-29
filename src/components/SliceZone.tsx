@@ -11,6 +11,7 @@ import Reviews from "@/slices/Reviews";
 import RichText from "@/slices/RichText";
 import Paragraph from "@/slices/Paragraph";
 import ImageSlice from "@/slices/Image";
+import FAQ from "@/slices/FAQ";
 import { SliceZoneType } from "@/types/slices";
 
 const components = {
@@ -26,6 +27,7 @@ const components = {
 	rich_text: RichText,
     paragraph: Paragraph,
     image: ImageSlice,
+    faq: FAQ,
 };
 
 export default function SliceZone({ slices }: { slices: SliceZoneType[] }) {

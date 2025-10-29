@@ -1,0 +1,35 @@
+{
+  "id": "faq",
+  "type": "SharedSlice",
+  "name": "FAQ",
+  "description": "Frequently Asked Questions section with optional background and side image",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "imageUrl": "",
+      "primary": {
+        "section_title": { "type": "Text", "config": { "label": "Section Title", "placeholder": "Frequently Asked Questions" } },
+        "background_image": { "type": "Image", "config": { "label": "Background Image" } },
+        "side_image": { "type": "Image", "config": { "label": "Side Illustration/Image" } },
+        "faqs": {
+          "type": "Group",
+          "config": {
+            "label": "FAQ Items",
+            "fields": {
+              "question": { "type": "Text", "config": { "label": "Question" } },
+              "answer": { "type": "Text", "config": { "label": "Answer", "multi": "paragraph" } }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
+
+
+

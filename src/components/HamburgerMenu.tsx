@@ -74,6 +74,13 @@ export default function HamburgerMenu({ items, locale }: HamburgerMenuProps) {
                         >
                             {locale === 'es' ? 'Blog' : 'Blog'}
                         </Link>
+                        <Link 
+                            href={`/${locale}/faq`} 
+                            className="text-white text-lg hover:text-gray-300 transition-colors"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            {locale === 'es' ? 'Preguntas frecuentes' : 'FAQ'}
+                        </Link>
                         {items.map((item, i) => (
                             item.link?.url && (
                                 <Link 
