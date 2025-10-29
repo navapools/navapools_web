@@ -2,6 +2,7 @@
 
 import type { SliceComponentProps, PrismicImage } from "@/types/slices";
 import Image from "next/image";
+import Reveal from "@/components/Reveal";
 import { useState, useEffect } from "react";
 
 type Review = {
@@ -218,34 +219,50 @@ export default function Reviews({ slice }: SliceComponentProps) {
         }
       `}</style>
       <section 
-        className="py-16 md:py-20 relative overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #38bdf8 50%, #1d4ed8 50%)'
-        }}
+        className="py-16 md:py-20 relative overflow-hidden bg-gradient-to-br from-sky-400 via-sky-500 to-blue-700"
       >
+      {/* Decorative angled shapes */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 right-[-20%] w-[70%] h-56 bg-white/90 backdrop-blur-sm shadow-xl rotate-[-6deg] rounded-2xl" />
+        <div className="absolute -top-16 right-[-10%] w-[60%] h-40 bg-blue-600/70 rotate-[-6deg] rounded-2xl" />
+      </div>
+      {/* Contrast overlay for readability */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background:
+            'radial-gradient(1100px 360px at 50% 0%, rgba(0,0,0,0.28), rgba(0,0,0,0) 70%)'
+        }}
+      />
       <div className="container mx-auto px-4 md:px-8">
         {/* Header */}
         {(sectionTitle || sectionSubtitle) && (
-          <div className="text-center mb-16">
-            {sectionTitle && (
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                {sectionTitle}
-              </h2>
-            )}
-            {sectionSubtitle && (
-              <p className="text-white/90 max-w-2xl mx-auto">
-                {sectionSubtitle}
-              </p>
-            )}
-          </div>
+          <Reveal direction="up">
+            <div className="text-center mb-16">
+              {sectionTitle && (
+                <h2 className="text-3xl md:text-4xl font-bold text-white text-shadow-lg mb-4">
+                  {sectionTitle}
+                </h2>
+              )}
+              {sectionSubtitle && (
+                <p className="text-white/95 text-shadow max-w-2xl mx-auto">
+                  {sectionSubtitle}
+                </p>
+              )}
+            </div>
+          </Reveal>
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left side - Main image (changes with selected review) */}
+          <Reveal direction="left">
           <div className="order-2 lg:order-1">
             {currentReviewData.pool_image?.url ? (
-              <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden shadow-lg border-4 border-white">
-                <Image
+              <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-visible">
+                <div className="relative h-full skew-y-3 rounded-2xl ring-4 ring-white/90 shadow-2xl overflow-hidden">
+                  <div className="relative h-full -skew-y-3">
+                    <Image
                   // key ensures Next remounts the Image when src changes so a fresh high-res request is made
                   key={getPrismicUrl(currentReviewData.pool_image.url, bigImageWidth, 90)}
                   src={getPrismicUrl(currentReviewData.pool_image.url, bigImageWidth, 90)}
@@ -255,10 +272,14 @@ export default function Reviews({ slice }: SliceComponentProps) {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority
                 />
+                  </div>
+                </div>
               </div>
             ) : mainImage?.url ? (
-              <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden shadow-lg border-4 border-white">
-                <Image
+              <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-visible">
+                <div className="relative h-full skew-y-3 rounded-2xl ring-4 ring-white/90 shadow-2xl overflow-hidden">
+                  <div className="relative h-full -skew-y-3">
+                    <Image
                   key={getPrismicUrl(mainImage.url, bigImageWidth, 90)}
                   src={getPrismicUrl(mainImage.url, bigImageWidth, 90)}
                   alt={mainImage.alt || "Pool showcase"}
@@ -267,6 +288,8 @@ export default function Reviews({ slice }: SliceComponentProps) {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority
                 />
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="h-96 lg:h-[500px] bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center border-4 border-white">
@@ -278,8 +301,10 @@ export default function Reviews({ slice }: SliceComponentProps) {
               </div>
             )}
           </div>
+          </Reveal>
 
           {/* Right side - 3D Carousel */}
+          <Reveal direction="right">
           <div className="order-1 lg:order-2">
             {/* 3D Carousel Container */}
             <div 
@@ -327,10 +352,10 @@ export default function Reviews({ slice }: SliceComponentProps) {
                             : 'translateX(80px) scale(0.75) rotateY(-45deg)'
                         }}
                       >
-                        <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-100 w-64 h-72 flex flex-col items-center justify-center">
+                        <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-100 w-64 h-72 flex flex-col items-center justify-center skew-y-1">
                           {/* Pool image */}
                           {review.pool_image?.url && (
-                            <div className="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden">
+                            <div className="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden -skew-y-1">
                               <Image
                                   src={getPrismicUrl(review.pool_image.url, 80, 40)}
                                   alt={review.pool_image.alt || "Pool"}
@@ -428,6 +453,7 @@ export default function Reviews({ slice }: SliceComponentProps) {
               ))}
             </div>
           </div>
+          </Reveal>
         </div>
       </div>
     </section>
