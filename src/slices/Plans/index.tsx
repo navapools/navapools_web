@@ -95,12 +95,12 @@ export default function Plans({ slice }: SliceComponentProps) {
                   className="flex flex-col items-center gap-3 md:flex-row md:items-center md:gap-3"
                 >
                   {b.icon?.url && (
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
                       <Image
                         src={b.icon.url}
                         alt={b.icon.alt || ""}
-                        width={20}
-                        height={20}
+                        width={40}
+                        height={40}
                         className="shrink-0"
                       />
                     </div>
