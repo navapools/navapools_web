@@ -1,0 +1,72 @@
+{
+  "id": "contact_alternate",
+  "type": "SharedSlice",
+  "name": "ContactAlternate",
+  "description": "ContactAlternate",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Enter section title"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Enter description text"
+          }
+        },
+        "background_image": {
+          "type": "Image",
+          "config": {
+            "label": "Background Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "button_text": {
+          "type": "Text",
+          "config": {
+            "label": "Button Text",
+            "placeholder": "Subscribe"
+          }
+        }
+      },
+      "items": {
+        "social_icon": {
+          "type": "Image",
+          "config": {
+            "label": "Social Icon",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "social_text": {
+          "type": "Text",
+          "config": {
+            "label": "Social Text",
+            "placeholder": "Follow us on..."
+          }
+        },
+        "social_link": {
+          "type": "Link",
+          "config": {
+            "label": "Social Link",
+            "placeholder": "Enter social media URL",
+            "allowTarget": true
+          }
+        }
+      }
+    }
+  ]
+}

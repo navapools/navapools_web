@@ -4,10 +4,12 @@ import HeroFullscreen from "./HeroFullscreen";
 import Plans from "./Plans";
 import Reviews from "./Reviews";
 import FAQ from "./FAQ";
+import ContactAlternate from "./ContactAlternate";
 
 export const components = {
   hero_fullscreen: HeroFullscreen,
   plans: Plans,
   reviews: Reviews,
   faq: FAQ,
+  contact_alternate: ContactAlternate,
 };
