@@ -44,7 +44,13 @@ export default function HamburgerMenu({ items, locale }: HamburgerMenuProps) {
                     onClick={() => scrollToSection('plans')}
                     className="text-white text-lg font-bold hover:text-gray-300 transition-all px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 cursor-pointer"
                 >
-                    {locale === 'es' ? 'Planes' : 'Plans'}
+                    {locale === 'es' ? 'Servicios + Planes' : 'Services + Plans'}
+                </button>
+                <button 
+                    onClick={() => scrollToSection('testimonials')}
+                    className="text-white text-lg font-bold hover:text-gray-300 transition-all px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 cursor-pointer"
+                >
+                    {locale === 'es' ? 'Testimonios' : 'Testimonials'}
                 </button>
                 <Link 
                     href={`/${locale}/contact`} 
@@ -126,7 +132,16 @@ export default function HamburgerMenu({ items, locale }: HamburgerMenuProps) {
                             }}
                             className="text-white text-lg hover:text-gray-300 transition-colors text-left"
                         >
-                            {locale === 'es' ? 'Planes' : 'Plans'}
+                            {locale === 'es' ? 'Servicios + Planes' : 'Services + Plans'}
+                        </button>
+                        <button 
+                            onClick={() => {
+                                scrollToSection('testimonials');
+                                setIsOpen(false);
+                            }}
+                            className="text-white text-lg hover:text-gray-300 transition-colors text-left"
+                        >
+                            {locale === 'es' ? 'Testimonios' : 'Testimonials'}
                         </button>
                         <Link 
                             href={`/${locale}/contact`} 

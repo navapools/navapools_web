@@ -219,7 +219,8 @@ export default function Reviews({ slice }: SliceComponentProps) {
         }
       `}</style>
       <section 
-        className="py-16 md:py-20 relative overflow-hidden bg-gradient-to-br from-sky-400 via-sky-500 to-blue-700"
+        id="testimonials"
+        className="min-h-screen flex flex-col justify-center py-16 md:py-20 relative overflow-hidden bg-gradient-to-br from-sky-400 via-sky-500 to-blue-700"
       >
       {/* Decorative angled shapes */}
       <div className="pointer-events-none absolute inset-0">
@@ -308,7 +309,7 @@ export default function Reviews({ slice }: SliceComponentProps) {
           <div className="order-1 lg:order-2">
             {/* 3D Carousel Container */}
             <div 
-              className="relative h-80 perspective-1000 overflow-hidden"
+              className="relative h-[60vh] perspective-1000 overflow-hidden"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}

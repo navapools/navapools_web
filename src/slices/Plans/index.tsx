@@ -1,6 +1,7 @@
 import type { SliceComponentProps, PrismicImage, PrismicLink } from "@/types/slices";
 import Image from "next/image";
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 
 type Badge = {
   icon: PrismicImage;
@@ -88,34 +89,35 @@ export default function Plans({ slice }: SliceComponentProps) {
         {/* Top badges section */}
         {badges.length > 0 && (
           <div className="mb-16">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {badges.map((b, i) => (
-                <div
-                  key={i}
-                  className="flex flex-col items-center text-center gap-4"
-                >
-                  {b.icon?.url && (
-                    <div className="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform">
-                      <Image
-                        src={b.icon.url}
-                        alt={b.icon.alt || ""}
-                        width={80}
-                        height={80}
-                        className="shrink-0"
-                      />
+            <Reveal direction="up">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {badges.map((b, i) => (
+                  <Reveal key={i} direction="up" delayMs={i * 80}>
+                    <div className="flex flex-col items-center text-center gap-4">
+                      {b.icon?.url && (
+                        <div className="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform">
+                          <Image
+                            src={b.icon.url}
+                            alt={b.icon.alt || ""}
+                            width={80}
+                            height={80}
+                            className="shrink-0"
+                          />
+                        </div>
+                      )}
+                      <div className="leading-tight">
+                        <div className="text-lg font-bold text-gray-800 mb-1">
+                          {b.label}
+                        </div>
+                        {b.sublabel && (
+                          <div className="text-sm text-gray-600">{b.sublabel}</div>
+                        )}
+                      </div>
                     </div>
-                  )}
-                  <div className="leading-tight">
-                    <div className="text-lg font-bold text-gray-800 mb-1">
-                      {b.label}
-                    </div>
-                    {b.sublabel && (
-                      <div className="text-sm text-gray-600">{b.sublabel}</div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
+                  </Reveal>
+                ))}
+              </div>
+            </Reveal>
           </div>
         )}
 
@@ -138,52 +140,61 @@ export default function Plans({ slice }: SliceComponentProps) {
           <div className="lg:col-span-7">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
               {plans.map((plan, idx) => (
-                <div
-                  key={idx}
-                  className="group bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col"
-                >
-                  {plan.image?.url && (
-                    <div className="relative h-40">
-                      <Image
-                        src={plan.image.url}
-                        alt={plan.image.alt || plan.name || ""}
-                        fill
-                        className="object-cover"
-                        priority={idx === 0}
-                      />
-                    </div>
-                  )}
-                  <div className="p-6 flex flex-col grow">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        {plan.name}
-                      </h3>
-                      {plan.price && (
-                        <span className="text-indigo-700 font-bold">
-                          {plan.price}
-                        </span>
+                <Reveal key={idx} direction="up" delayMs={idx * 100}>
+                  <div className="group bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col">
+                    {plan.image?.url && (
+                      <Reveal direction="up" delayMs={idx * 100 + 60}>
+                        <div className="relative h-40">
+                          <Image
+                            src={plan.image.url}
+                            alt={plan.image.alt || plan.name || ""}
+                            fill
+                            className="object-cover"
+                            priority={idx === 0}
+                          />
+                        </div>
+                      </Reveal>
+                    )}
+                    <div className="p-6 flex flex-col grow">
+                      <div className="flex items-baseline justify-between gap-3">
+                        <Reveal direction="up" delayMs={idx * 100 + 120}>
+                          <h3 className="text-lg font-semibold text-gray-900">
+                            {plan.name}
+                          </h3>
+                        </Reveal>
+                        {plan.price && (
+                          <Reveal direction="up" delayMs={idx * 100 + 140}>
+                            <span className="text-indigo-700 font-bold">
+                              {plan.price}
+                            </span>
+                          </Reveal>
+                        )}
+                      </div>
+                      {plan.description && (
+                        <Reveal direction="up" delayMs={idx * 100 + 180}>
+                          <p className="mt-2 text-gray-600 text-sm">
+                            {plan.description}
+                          </p>
+                        </Reveal>
+                      )}
+
+                      {renderFeatures(plan.features)}
+
+                      {(plan.cta_text || plan.cta_link?.url) && (
+                        <div className="mt-6 pt-4 border-t border-gray-100">
+                          <Reveal direction="up" delayMs={idx * 100 + 220}>
+                            <Link
+                              href={{ pathname: (plan.cta_link?.url as unknown as string) || "#" }}
+                              className="inline-flex items-center justify-center w-full px-4 py-2.5 rounded-lg bg-indigo-700 text-white font-semibold hover:bg-indigo-800 transition-colors"
+                            >
+                              {plan.cta_text || "Seleccionar"}
+                            </Link>
+                          </Reveal>
+                        </div>
                       )}
                     </div>
-                    {plan.description && (
-                      <p className="mt-2 text-gray-600 text-sm">
-                        {plan.description}
-                      </p>
-                    )}
-
-                    {renderFeatures(plan.features)}
-
-                    {(plan.cta_text || plan.cta_link?.url) && (
-                      <div className="mt-6 pt-4 border-t border-gray-100">
-                        <Link
-                          href={{ pathname: (plan.cta_link?.url as unknown as string) || "#" }}
-                          className="inline-flex items-center justify-center w-full px-4 py-2.5 rounded-lg bg-indigo-700 text-white font-semibold hover:bg-indigo-800 transition-colors"
-                        >
-                          {plan.cta_text || "Seleccionar"}
-                        </Link>
-                      </div>
-                    )}
                   </div>
-                </div>
+                </Reveal>
               ))}
 
               {plans.length === 0 && (
