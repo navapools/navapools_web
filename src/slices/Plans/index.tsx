@@ -88,29 +88,29 @@ export default function Plans({ slice }: SliceComponentProps) {
         {/* Top badges section */}
         {badges.length > 0 && (
           <div className="mb-16">
-            <div className="flex justify-start gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {badges.map((b, i) => (
                 <div
                   key={i}
-                  className="flex flex-col items-center gap-3 md:flex-row md:items-center md:gap-3"
+                  className="flex flex-col items-center text-center gap-4"
                 >
                   {b.icon?.url && (
-                    <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
+                    <div className="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform">
                       <Image
                         src={b.icon.url}
                         alt={b.icon.alt || ""}
-                        width={40}
-                        height={40}
+                        width={80}
+                        height={80}
                         className="shrink-0"
                       />
                     </div>
                   )}
-                  <div className="leading-tight text-center md:text-left">
-                    <div className="text-sm font-semibold text-gray-800">
+                  <div className="leading-tight">
+                    <div className="text-lg font-bold text-gray-800 mb-1">
                       {b.label}
                     </div>
                     {b.sublabel && (
-                      <div className="text-xs text-gray-600">{b.sublabel}</div>
+                      <div className="text-sm text-gray-600">{b.sublabel}</div>
                     )}
                   </div>
                 </div>
