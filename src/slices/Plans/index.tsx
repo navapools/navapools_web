@@ -75,7 +75,7 @@ export default function Plans({ slice }: SliceComponentProps) {
   };
 
   return (
-    <section className="relative py-16 md:py-20 bg-gray-50 overflow-hidden">
+    <section id="plans" className="relative py-16 md:py-20 bg-gray-50 overflow-hidden">
       {/* Diagonal background elements */}
       <div className="absolute inset-0">
         {/* Top diagonal band */}
