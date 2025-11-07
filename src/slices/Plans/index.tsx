@@ -90,27 +90,31 @@ export default function Plans({ slice }: SliceComponentProps) {
         {badges.length > 0 && (
           <div className="mb-16">
             <Reveal direction="up">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {badges.map((b, i) => (
                   <Reveal key={i} direction="up" delayMs={i * 80}>
-                    <div className="flex flex-col items-center text-center gap-4">
+                    <div className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                       {b.icon?.url && (
-                        <div className="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform">
+                        <div className="relative w-full h-64">
                           <Image
                             src={b.icon.url}
                             alt={b.icon.alt || ""}
-                            width={80}
-                            height={80}
-                            className="shrink-0"
+                            fill
+                            className="object-cover rounded-t-xl"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
+                          {/* Gradient overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30 rounded-t-xl"></div>
                         </div>
                       )}
-                      <div className="leading-tight">
-                        <div className="text-lg font-bold text-gray-800 mb-1">
+                      <div className="p-6 bg-white">
+                        <h3 className="text-xl font-bold text-gray-800 mb-2">
                           {b.label}
-                        </div>
+                        </h3>
                         {b.sublabel && (
-                          <div className="text-sm text-gray-600">{b.sublabel}</div>
+                          <p className="text-gray-600 leading-relaxed">
+                            {b.sublabel}
+                          </p>
                         )}
                       </div>
                     </div>

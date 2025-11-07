@@ -1,8 +1,11 @@
+'use client';
+
 import type { SliceComponentProps, PrismicImage, PrismicLink } from "@/types/slices";
 import Image from "next/image";
 import Link from "next/link";
 import VideoBackground from "@/components/VideoBackground";
 import Reveal from "@/components/Reveal";
+import { useParams } from "next/navigation";
 
 interface VideoField {
 	url?: string;
@@ -13,6 +16,9 @@ interface VideoFieldOrString extends VideoField {
 }
 
 export default function HeroFullscreen({ slice }: SliceComponentProps) {
+    const params = useParams();
+    const locale = params?.locale as string || 'en';
+    
     const {
         background_image = {} as PrismicImage,
         title = '',
@@ -78,7 +84,7 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
                             {primary_cta_text && (
                                 <Reveal direction="left" delayMs={200}>
                                     <Link 
-                                        href={{ pathname: primary_cta_link?.url || '#' }}
+                                        href={{ pathname: primary_cta_link?.url || `/${locale}/contact` }}
                                         className="block w-full sm:w-auto m-0 bg-indigo-700 hover:bg-indigo-800 text-white px-6 sm:px-8 py-4 rounded-lg font-semibold text-base sm:text-lg transition-colors duration-300 text-center"
                                     >
                                         {primary_cta_text}

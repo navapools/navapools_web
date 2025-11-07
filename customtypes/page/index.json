@@ -83,6 +83,9 @@
             "plans": {
               "type": "SharedSlice"
             },
+            "video_section": {
+              "type": "SharedSlice"
+            },
             "hero_fullscreen": {
               "type": "Slice",
               "fieldset": "Hero Fullscreen",

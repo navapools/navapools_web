@@ -1,0 +1,59 @@
+{
+  "id": "video_section",
+  "type": "SharedSlice",
+  "name": "VideoSection",
+  "description": "A full-screen video section with title and subtitle",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "title": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Title",
+            "placeholder": "Section Title",
+            "allowTargetBlank": true,
+            "single": "heading1"
+          }
+        },
+        "subtitle": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Subtitle",
+            "placeholder": "Section Subtitle",
+            "allowTargetBlank": true,
+            "single": "paragraph"
+          }
+        },
+        "videoUrl": {
+          "type": "Link",
+          "config": {
+            "label": "Video URL",
+            "placeholder": "Enter YouTube URL or direct video link",
+            "select": null
+          }
+        },
+        "backgroundOpacity": {
+          "type": "Number",
+          "config": {
+            "label": "Background Opacity",
+            "placeholder": "Enter a value between 0 and 1",
+            "default": "0.7"
+          }
+        },
+        "backgroundColor": {
+          "type": "Color",
+          "config": {
+            "label": "Background Color",
+            "placeholder": "Select background color"
+          }
+        }
+      }
+    }
+  ]
+}

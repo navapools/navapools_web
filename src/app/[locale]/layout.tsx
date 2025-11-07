@@ -70,7 +70,14 @@ export default async function LocaleLayout({
     params: Promise<{ locale: string }>;
 }) {
     const { locale } = await params;
-    const messages = (await import(`@/i18n/messages/${locale}.json`)).default;
+    let messages;
+    try {
+        messages = (await import(`../../i18n/messages/${locale}.json`)).default;
+    } catch (error) {
+        console.error(`Error loading messages for locale ${locale}:`, error);
+        // Fallback to English if the requested locale file is not found
+        messages = (await import('../../i18n/messages/en.json')).default;
+    }
     
     // Usar fallbacks por defecto y luego intentar cargar desde Prismic
     let nav: Navigation = { data: { items: [] } };

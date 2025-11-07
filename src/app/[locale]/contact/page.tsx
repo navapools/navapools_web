@@ -42,18 +42,45 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 				}}
 			/>
 
-			<div className="relative z-10 max-w-xl mx-auto px-6 pt-24 md:pt-28 pb-16">
-				<h1 className="text-3xl md:text-4xl font-bold text-white mb-1">{contactCopy.title}</h1>
-				{contactCopy.subtitle ? (
-					<p className="text-sky-100 mb-4">{contactCopy.subtitle}</p>
-				) : null}
-				{contactCopy.description ? (
-					<p className="text-sky-100/90 mb-6">{contactCopy.description}</p>
-				) : null}
+			<div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 md:pt-28 pb-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+					{/* About Us Section */}
+					<div className="relative">
+						<div className="max-w-xl">
+							<h2 className="text-3xl md:text-4xl font-bold text-white mb-4">About Us</h2>
+							<h3 className="text-xl text-sky-100 mb-4">Your Swimming Pool Experts</h3>
+							<div className="prose prose-lg prose-invert">
+								<p className="text-sky-100 mb-6">
+									With over two decades of experience in pool construction and maintenance, 
+									we take pride in creating the perfect aquatic environments for our clients. 
+									Our team of experts combines technical expertise with artistic vision to 
+									deliver exceptional results that exceed expectations.
+								</p>
+								<p className="text-sky-100">
+									Whether you&apos;re dreaming of a luxurious backyard oasis or seeking professional 
+									maintenance services, our dedicated team is here to help turn your vision into reality. 
+									We believe in building lasting relationships with our clients through quality work 
+									and outstanding service.
+								</p>
+							</div>
+						</div>
+					</div>
 
-				{/* White card for the form to ensure accessibility and contrast */}
-				<div className="mt-6 bg-white/95 p-6 rounded-xl shadow-lg">
-					<ContactForm locale={locale} copy={contactCopy} />
+					{/* Contact Form Section */}
+					<div>
+						<h2 className="text-3xl md:text-4xl font-bold text-white mb-1">{contactCopy.title}</h2>
+						{contactCopy.subtitle ? (
+							<p className="text-sky-100 mb-4">{contactCopy.subtitle}</p>
+						) : null}
+						{contactCopy.description ? (
+							<p className="text-sky-100/90 mb-6">{contactCopy.description}</p>
+						) : null}
+
+						{/* White card for the form to ensure accessibility and contrast */}
+						<div className="mt-6 bg-white/95 p-6 rounded-xl shadow-lg">
+							<ContactForm locale={locale} copy={contactCopy} />
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>

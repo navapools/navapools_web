@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { SliceComponentProps } from "@/types/slices";
+
 import type { ContactAlternateContentType } from "@/types/prismic";
 import React from "react";
 import Reveal from "@/components/Reveal";

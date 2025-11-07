@@ -20,6 +20,7 @@ const Paragraph = dynamic(() => import("@/slices/Paragraph"));
 const ImageSlice = dynamic(() => import("@/slices/Image"));
 const FAQ = dynamic(() => import("@/slices/FAQ"));
 const ContactAlternate = dynamic(() => import("@/slices/ContactAlternate"));
+const VideoSection = dynamic(() => import("@/slices/VideoSection"));
 
 const components = {
   hero_fullscreen: HeroFullscreen,
@@ -36,6 +37,7 @@ const components = {
   image: ImageSlice,
   faq: FAQ,
   contact_alternate: ContactAlternate,
+  video_section: VideoSection,
 };
 
 export default function SliceZoneClient({ slices }: { slices: SliceZoneType[] }) {

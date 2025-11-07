@@ -5,6 +5,7 @@ import Plans from "./Plans";
 import Reviews from "./Reviews";
 import FAQ from "./FAQ";
 import ContactAlternate from "./ContactAlternate";
+import VideoSection from "./VideoSection";
 
 export const components = {
   hero_fullscreen: HeroFullscreen,
@@ -12,4 +13,5 @@ export const components = {
   reviews: Reviews,
   faq: FAQ,
   contact_alternate: ContactAlternate,
+  video_section: VideoSection,
 };
