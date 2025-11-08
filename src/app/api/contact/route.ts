@@ -7,6 +7,11 @@ export async function POST(request: Request) {
 	try {
         const body = await request.json();
         console.log('Contact API payload:', body);
+        console.log('MailerSend Environment:', {
+            hasToken: !!process.env.MAILERSEND_TOKEN,
+            hasFrom: !!process.env.MAILERSEND_FROM,
+            hasAdminTo: !!process.env.MAILERSEND_ADMIN_TO,
+        });
         const { name, email, message } = body || {};
 
         const trimmedEmail = typeof email === "string" ? email.trim() : "";
@@ -36,6 +41,12 @@ export async function POST(request: Request) {
         `;
 
         const resolvedFrom = process.env.MAILERSEND_FROM as string; // must be verified in MailerSend
+        console.log('MailerSend config:', {
+            hasToken: !!process.env.MAILERSEND_TOKEN,
+            mailersendFrom: process.env.MAILERSEND_FROM,
+            mailersendAdminTo: process.env.MAILERSEND_ADMIN_TO,
+            sendgridFrom: process.env.SENDGRID_FROM ? true : false,
+        });
         const sender = new Sender(resolvedFrom, "NavaPools");
 
         // 1) Send to admin inbox
@@ -49,8 +60,18 @@ export async function POST(request: Request) {
         try {
             await mailerSend.email.send(adminEmailParams);
         } catch (err: unknown) {
-            console.error('MailerSend admin email error:', err);
-            return NextResponse.json({ error: "MailerSend admin email failed", details: String(err) }, { status: 500 });
+            // Log as much useful info as possible without printing secrets
+            console.error('MailerSend admin email error (raw):', err);
+            // Try to extract common axios-like response body/message
+            let details: string;
+            try {
+                // @ts-expect-error - MailerSend error type includes response.body
+                details = err?.response?.body || err?.response || (err instanceof Error ? err.message : String(err));
+            } catch (_) {
+                details = String(err);
+            }
+            console.error('MailerSend admin email details:', details);
+            return NextResponse.json({ error: "MailerSend admin email failed", details }, { status: 500 });
         }
 
         // 2) Confirmation to user (localized) - DISABLED
