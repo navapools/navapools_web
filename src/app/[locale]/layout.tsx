@@ -99,15 +99,15 @@ export default async function LocaleLayout({
             <HashScrollHandler />
             <div className="min-h-screen antialiased">
                 {/* Header con altura responsiva para controlar el tamaño del logo sin mover el menú */}
-                <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-4 gap-4 h-24 md:h-32 lg:h-40">
-                    <div className="flex items-center gap-3">
+                <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-2">
+                    <div className="flex items-center">
                         <Link href={`/${locale}`} className="cursor-pointer hover:opacity-80 transition-opacity">
                                 <Image 
                                     src="/NavaPools_logo.png" 
                                     alt={settings.data.site_name || "NavaPools"} 
-                                    width={700} 
-                                    height={232}
-                                    className="w-auto object-contain max-h-[80px] md:max-h-[128px] lg:max-h-[192px]"
+                                    width={1200} 
+                                    height={397}
+                                    className="w-auto h-auto object-contain max-h-[140px] md:max-h-[180px] lg:max-h-[240px]"
                                     priority
                                     unoptimized
                                 />

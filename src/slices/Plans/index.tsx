@@ -125,30 +125,32 @@ export default function Plans({ slice }: SliceComponentProps) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Left copy */}
-          <div className="lg:col-span-5">
+          <div className="space-y-6">
             {sectionTitle && (
-              <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-blue-900 leading-tight">
                 {sectionTitle}
               </h2>
             )}
             {sectionSubtitle && (
-              <p className="text-gray-600 leading-relaxed mb-8">
-                {sectionSubtitle}
-              </p>
+              <div className="space-y-4">
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  {sectionSubtitle}
+                </p>
+              </div>
             )}
           </div>
 
           {/* Plans cards */}
-          <div className="lg:col-span-7">
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="lg:max-w-xl lg:mx-auto w-full">
+            <div className="grid grid-cols-1 gap-6">
               {plans.map((plan, idx) => (
                 <Reveal key={idx} direction="up" delayMs={idx * 100}>
-                  <div className="group bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col">
+                  <div className="group bg-white rounded-2xl border-2 border-blue-100 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col">
                     {plan.image?.url && (
                       <Reveal direction="up" delayMs={idx * 100 + 60}>
-                        <div className="relative h-40">
+                        <div className="relative h-48">
                           <Image
                             src={plan.image.url}
                             alt={plan.image.alt || plan.name || ""}
@@ -156,19 +158,20 @@ export default function Plans({ slice }: SliceComponentProps) {
                             className="object-cover"
                             priority={idx === 0}
                           />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                         </div>
                       </Reveal>
                     )}
-                    <div className="p-6 flex flex-col grow">
-                      <div className="flex items-baseline justify-between gap-3">
+                    <div className="p-8 flex flex-col grow">
+                      <div className="flex items-baseline justify-between gap-3 mb-4">
                         <Reveal direction="up" delayMs={idx * 100 + 120}>
-                          <h3 className="text-lg font-semibold text-gray-900">
+                          <h3 className="text-2xl font-bold text-blue-900">
                             {plan.name}
                           </h3>
                         </Reveal>
                         {plan.price && (
                           <Reveal direction="up" delayMs={idx * 100 + 140}>
-                            <span className="text-indigo-700 font-bold">
+                            <span className="text-2xl text-indigo-700 font-bold">
                               {plan.price}
                             </span>
                           </Reveal>

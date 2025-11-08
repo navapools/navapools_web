@@ -25,7 +25,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 	const contactCopy = await getContact(locale);
 
 	return (
-		<section className="relative overflow-hidden bg-gradient-to-br from-sky-400 via-sky-500 to-blue-700">
+		<section className="relative overflow-hidden bg-gradient-to-br from-sky-400 via-sky-500 to-blue-700 min-h-[calc(100vh-64px)] pt-[180px] md:pt-[220px] lg:pt-[260px]">
 			{/* Decorative shapes (different from FAQ): soft blurred circle + subtle tilted panel */}
 			<div className="pointer-events-none absolute inset-0">
 				<div className="absolute -top-20 left-[-8%] w-72 h-72 bg-white/80 rounded-full filter blur-3xl opacity-60" />
@@ -42,7 +42,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 				}}
 			/>
 
-			<div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 md:pt-28 pb-16">
+			<div className="relative z-10 max-w-7xl mx-auto px-6 pb-16 md:pb-20">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12">
 					{/* About Us Section */}
 					<div className="relative">

@@ -59,9 +59,9 @@ export default function ContactForm({ locale, copy }: ContactFormProps) {
 
 	return (
 		<>
-			<form className="space-y-4" onSubmit={onSubmit}>
+			<form className="space-y-6" onSubmit={onSubmit}>
 				<input 
-					className="w-full border p-2 rounded" 
+					className="w-full border p-3 rounded-lg text-lg" 
 					placeholder={copy.name_placeholder} 
 					value={name} 
 					onChange={(e) => setName(e.target.value)} 
@@ -69,7 +69,7 @@ export default function ContactForm({ locale, copy }: ContactFormProps) {
 					disabled={isSubmitting}
 				/>
 				<input 
-					className="w-full border p-2 rounded" 
+					className="w-full border p-3 rounded-lg text-lg" 
 					placeholder={copy.email_placeholder} 
 					type="email" 
 					value={email} 
@@ -78,16 +78,16 @@ export default function ContactForm({ locale, copy }: ContactFormProps) {
 					disabled={isSubmitting}
 				/>
 				<textarea 
-					className="w-full border p-2 rounded" 
+					className="w-full border p-3 rounded-lg text-lg" 
 					placeholder={copy.message_placeholder} 
-					rows={6} 
+					rows={8} 
 					value={message} 
 					onChange={(e) => setMessage(e.target.value)} 
 					required 
 					disabled={isSubmitting}
 				/>
 				<button 
-					className="px-4 py-2 rounded bg-black text-white disabled:opacity-50 disabled:cursor-not-allowed" 
+					className="w-full px-6 py-3 rounded-lg bg-black text-white text-lg font-semibold hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
 					type="submit" 
 					disabled={isSubmitting}
 				>

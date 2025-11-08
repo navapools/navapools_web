@@ -143,7 +143,7 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
                                 <Reveal direction="left" delayMs={200}>
                                     <Link 
                                         href={{ pathname: primary_cta_link?.url || `/${locale}/contact` }}
-                                        className="block w-full sm:w-auto m-0 bg-indigo-700 hover:bg-indigo-800 text-white px-6 sm:px-8 py-4 rounded-lg font-semibold text-base sm:text-lg transition-colors duration-300 text-center"
+                                        className="block w-full sm:w-auto m-0 bg-indigo-700 hover:bg-indigo-800 text-white px-4 sm:px-6 py-3 lg:py-4 rounded-lg font-semibold text-base sm:text-lg transition-colors duration-300 text-center"
                                     >
                                         {primary_cta_text}
                                     </Link>
@@ -153,7 +153,7 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
                                 <Reveal direction="right" delayMs={260}>
                                     <Link 
                                         href={{ pathname: secondary_cta_link?.url || '#' }}
-                                        className="block w-full sm:w-auto m-0 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold px-6 sm:px-8 py-4 rounded-lg transition-colors duration-300 text-center border border-white/30"
+                                        className="block w-full sm:w-auto m-0 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold px-4 sm:px-6 py-3 lg:py-4 rounded-lg transition-colors duration-300 text-center border border-white/30"
                                     >
                                         {secondary_cta_text}
                                     </Link>
