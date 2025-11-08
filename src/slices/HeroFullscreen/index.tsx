@@ -7,17 +7,70 @@ import VideoBackground from "@/components/VideoBackground";
 import Reveal from "@/components/Reveal";
 import { useParams } from "next/navigation";
 
-interface VideoField {
-	url?: string;
-}
-
-interface VideoFieldOrString extends VideoField {
-	url?: string;
+// Helper function to extract URL from Prismic link field
+// Prismic LinkField can have different structures:
+// - String (direct URL)
+// - Object with { link_type: 'Web', url: '...' }
+// - Object with { url: '...' }
+// - Object with other Prismic-specific properties
+function extractUrl(field: unknown): string {
+    if (!field) return '';
+    
+    // If it's already a string, return it
+    if (typeof field === 'string') {
+        return field.trim();
+    }
+    
+    // If it's an array (unlikely but possible), try first element
+    if (Array.isArray(field) && field.length > 0) {
+        return extractUrl(field[0]);
+    }
+    
+    // If it's an object, try to get the url property
+    if (typeof field === 'object' && field !== null) {
+        const obj = field as Record<string, unknown>;
+        
+        // First, try direct url property (most common)
+        if (typeof obj.url === 'string' && obj.url.trim()) {
+            return obj.url.trim();
+        }
+        
+        // Try Prismic Link structure with link_type
+        if (obj.link_type === 'Web' && typeof obj.url === 'string') {
+            return obj.url.trim();
+        }
+        
+        // Try Media link type
+        if (obj.link_type === 'Media' && typeof obj.url === 'string') {
+            return obj.url.trim();
+        }
+        
+        // Try Document link type (usually has id, not url, but check anyway)
+        if (obj.link_type === 'Document' && typeof obj.url === 'string') {
+            return obj.url.trim();
+        }
+        
+        // Try other possible property names
+        const possibleUrlProps = ['href', 'link', 'src', 'source', 'asLinkUrl'];
+        for (const prop of possibleUrlProps) {
+            if (typeof obj[prop] === 'string' && obj[prop]) {
+                return String(obj[prop]).trim();
+            }
+        }
+    }
+    
+    return '';
 }
 
 export default function HeroFullscreen({ slice }: SliceComponentProps) {
     const params = useParams();
     const locale = params?.locale as string || 'en';
+    
+    // Extract video URLs with robust helper
+    const rawVideoUrl = slice.primary?.video_url;
+    const rawMobileVideoUrl = slice.primary?.mobile_video_url;
+    const video_url = extractUrl(rawVideoUrl);
+    const mobile_video_url = extractUrl(rawMobileVideoUrl);
     
     const {
         background_image = {} as PrismicImage,
@@ -27,19 +80,24 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
         primary_cta_link = {} as PrismicLink,
         secondary_cta_text = '',
         secondary_cta_link = {} as PrismicLink,
-        video_url = '',
-        mobile_video_url = ''
     } = {
         background_image: slice.primary?.background_image as PrismicImage,
         title: slice.primary?.title as string,
         subtitle: slice.primary?.subtitle as string,
-        primary_cta_text: slice.primary?.primary_cta_text as string,
-        primary_cta_link: slice.primary?.primary_cta_link as PrismicLink,
-        secondary_cta_text: slice.primary?.secondary_cta_text as string,
-        secondary_cta_link: slice.primary?.secondary_cta_link as PrismicLink,
-        video_url: (slice.primary?.video_url as VideoFieldOrString)?.url || slice.primary?.video_url as string || '',
-        mobile_video_url: (slice.primary?.mobile_video_url as VideoFieldOrString)?.url || slice.primary?.mobile_video_url as string || ''
+        primary_cta_text: slice.primary?.primary_cta_text as string || slice.primary?.primary_button_text as string,
+        primary_cta_link: slice.primary?.primary_cta_link as PrismicLink || slice.primary?.primary_button_link as PrismicLink,
+        secondary_cta_text: slice.primary?.secondary_cta_text as string || slice.primary?.secondary_button_text as string,
+        secondary_cta_link: slice.primary?.secondary_cta_link as PrismicLink || slice.primary?.secondary_button_link as PrismicLink,
     };
+
+    // Debug: verificar que la URL del video se está extrayendo correctamente
+    if (process.env.NODE_ENV === 'development') {
+        console.log('HeroFullscreen - Raw video_url field:', rawVideoUrl);
+        console.log('HeroFullscreen - Extracted Video URL:', video_url);
+        console.log('HeroFullscreen - Raw mobile_video_url field:', rawMobileVideoUrl);
+        console.log('HeroFullscreen - Extracted Mobile Video URL:', mobile_video_url);
+        console.log('HeroFullscreen - Full slice.primary:', slice.primary);
+    }
 
     return (
         <section className="relative min-h-screen flex items-center overflow-hidden">

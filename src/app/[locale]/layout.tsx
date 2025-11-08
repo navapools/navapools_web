@@ -7,6 +7,7 @@ import "../globals.css";
 import { getNavigation, getSettings } from "@/prismic/queries";
 import type { Navigation, Settings } from "@/types/prismic";
 import HamburgerMenu from "@/components/HamburgerMenu";
+import HashScrollHandler from "@/components/HashScrollHandler";
 
 // NOTE: We provide a generateMetadata function below to produce dynamic, localized
 // metadata (Open Graph, Twitter, hreflang alternates, and robots). This helps
@@ -95,6 +96,7 @@ export default async function LocaleLayout({
 
     return (
         <NextIntlClientProvider locale={locale} messages={messages}>
+            <HashScrollHandler />
             <div className="min-h-screen antialiased">
                 {/* Header con altura responsiva para controlar el tamaño del logo sin mover el menú */}
                 <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-4 gap-4 h-24 md:h-32 lg:h-40">

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 // Función para scroll suave
 const scrollToSection = (id: string) => {
@@ -28,7 +29,23 @@ interface HamburgerMenuProps {
 
 export default function HamburgerMenu({ items, locale }: HamburgerMenuProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const pathname = usePathname();
     const other = locale === "en" ? "es" : "en";
+    
+    // Función para manejar la navegación a secciones
+    const handleSectionClick = (sectionId: string) => {
+        const homePath = `/${locale}`;
+        const isHomePage = pathname === homePath;
+        
+        if (isHomePage) {
+            // Si estamos en la página principal, hacer scroll
+            scrollToSection(sectionId);
+        } else {
+            // Si estamos en otra página, navegar a la principal con hash
+            // Usar window.location.href para asegurar que el hash se incluya correctamente
+            window.location.href = `${homePath}#${sectionId}`;
+        }
+    };
 
     return (
         <div className="relative">
@@ -41,13 +58,13 @@ export default function HamburgerMenu({ items, locale }: HamburgerMenuProps) {
                     {locale === 'es' ? 'Inicio' : 'Home'}
                 </Link>
                 <button 
-                    onClick={() => scrollToSection('plans')}
+                    onClick={() => handleSectionClick('plans')}
                     className="text-white text-lg font-bold hover:text-gray-300 transition-all px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 cursor-pointer"
                 >
                     {locale === 'es' ? 'Servicios + Planes' : 'Services + Plans'}
                 </button>
                 <button 
-                    onClick={() => scrollToSection('testimonials')}
+                    onClick={() => handleSectionClick('testimonials')}
                     className="text-white text-lg font-bold hover:text-gray-300 transition-all px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 cursor-pointer"
                 >
                     {locale === 'es' ? 'Testimonios' : 'Testimonials'}
@@ -85,7 +102,7 @@ export default function HamburgerMenu({ items, locale }: HamburgerMenuProps) {
                     href={`/${other}`} 
                     className="text-white text-lg font-bold hover:text-gray-300 transition-all px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20"
                 >
-                    {other.toUpperCase()}
+                    {other === 'es' ? 'Español' : 'English'}
                 </Link>
             </nav>
 
@@ -127,7 +144,7 @@ export default function HamburgerMenu({ items, locale }: HamburgerMenuProps) {
                         </Link>
                         <button 
                             onClick={() => {
-                                scrollToSection('plans');
+                                handleSectionClick('plans');
                                 setIsOpen(false);
                             }}
                             className="text-white text-lg hover:text-gray-300 transition-colors text-left"
@@ -136,7 +153,7 @@ export default function HamburgerMenu({ items, locale }: HamburgerMenuProps) {
                         </button>
                         <button 
                             onClick={() => {
-                                scrollToSection('testimonials');
+                                handleSectionClick('testimonials');
                                 setIsOpen(false);
                             }}
                             className="text-white text-lg hover:text-gray-300 transition-colors text-left"
@@ -181,7 +198,7 @@ export default function HamburgerMenu({ items, locale }: HamburgerMenuProps) {
                             className="text-white text-lg hover:text-gray-300 transition-colors"
                             onClick={() => setIsOpen(false)}
                         >
-                            {other.toUpperCase()}
+                            {other === 'es' ? 'Español' : 'English'}
                         </Link>
                     </nav>
                 </div>

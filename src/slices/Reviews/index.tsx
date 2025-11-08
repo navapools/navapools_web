@@ -68,6 +68,7 @@ export default function Reviews({ slice }: SliceComponentProps) {
   // Use a deterministic default width on the server to avoid hydration mismatch.
   // We'll adjust on the client after mount.
   const [bigImageWidth, setBigImageWidth] = useState<number>(1400);
+  const [isDesktop, setIsDesktop] = useState<boolean>(false);
 
   useEffect(() => {
     // compute client width once after mount and on resize
@@ -75,6 +76,7 @@ export default function Reviews({ slice }: SliceComponentProps) {
       const ratio = window.devicePixelRatio || 1;
       const w = Math.min(2000, Math.max(800, Math.round(window.innerWidth * 0.5 * ratio)));
       setBigImageWidth(w);
+      setIsDesktop(window.innerWidth >= 1024);
     };
     compute();
     window.addEventListener('resize', compute);
@@ -165,7 +167,7 @@ export default function Reviews({ slice }: SliceComponentProps) {
     return Array.from({ length: 5 }, (_, i) => (
       <span
         key={i}
-        className={`text-lg ${
+        className={`text-lg lg:text-xl ${
           i < rating ? "text-yellow-400" : "text-gray-300"
         }`}
       >
@@ -240,14 +242,14 @@ export default function Reviews({ slice }: SliceComponentProps) {
         {/* Header */}
         {(sectionTitle || sectionSubtitle) && (
           <Reveal direction="up">
-            <div className="text-center mb-16">
+            <div className="text-center lg:text-left mb-16">
               {sectionTitle && (
-                <h2 className="text-3xl md:text-4xl font-bold text-white text-shadow-lg mb-4">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-shadow-lg mb-4">
                   {sectionTitle}
                 </h2>
               )}
               {sectionSubtitle && (
-                <p className="text-white/95 text-shadow max-w-2xl mx-auto">
+                <p className="text-base md:text-lg lg:text-xl text-white/95 text-shadow max-w-2xl lg:max-w-3xl mx-auto lg:mx-0">
                   {sectionSubtitle}
                 </p>
               )}
@@ -336,8 +338,8 @@ export default function Reviews({ slice }: SliceComponentProps) {
                           isCenter
                             ? 'z-30 scale-100 opacity-100 translate-x-0'
                             : isLeft
-                            ? 'z-20 scale-75 opacity-70 -translate-x-16 rotate-y-45'
-                            : 'z-20 scale-75 opacity-70 translate-x-16 -rotate-y-45'
+                            ? 'z-20 scale-75 opacity-70 lg:-translate-x-[110px] -translate-x-16 rotate-y-45'
+                            : 'z-20 scale-75 opacity-70 lg:translate-x-[110px] translate-x-16 -rotate-y-45'
                         }`}
                         onClick={() => {
                           console.log('Card clicked, selecting index:', review.index);
@@ -349,43 +351,47 @@ export default function Reviews({ slice }: SliceComponentProps) {
                           transform: isCenter
                             ? 'translateX(0) scale(1) rotateY(0deg)'
                             : isLeft
-                            ? 'translateX(-80px) scale(0.75) rotateY(45deg)'
+                            ? isDesktop
+                              ? 'translateX(-110px) scale(0.75) rotateY(45deg)'
+                              : 'translateX(-80px) scale(0.75) rotateY(45deg)'
+                            : isDesktop
+                            ? 'translateX(110px) scale(0.75) rotateY(-45deg)'
                             : 'translateX(80px) scale(0.75) rotateY(-45deg)'
                         }}
                       >
-                        <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-100 w-64 h-72 flex flex-col items-center justify-center skew-y-1">
+                        <div className="bg-white rounded-xl p-6 lg:p-8 shadow-lg border-2 border-gray-100 w-64 lg:w-80 h-72 lg:h-96 flex flex-col items-center justify-center skew-y-1">
                           {/* Pool image */}
                           {review.pool_image?.url && (
-                            <div className="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden -skew-y-1">
+                            <div className="w-20 h-20 lg:w-24 lg:h-24 mx-auto mb-4 lg:mb-5 rounded-full overflow-hidden -skew-y-1 relative">
                               <Image
-                                  src={getPrismicUrl(review.pool_image.url, 80, 40)}
+                                  src={getPrismicUrl(review.pool_image.url, 160, 80)}
                                   alt={review.pool_image.alt || "Pool"}
-                                  width={80}
-                                  height={80}
-                                  className="object-cover"
-                                  quality={40}
+                                  fill
+                                  className="object-cover object-center"
+                                  quality={80}
                                   loading={isCenter ? 'eager' : 'lazy'}
+                                  sizes="(max-width: 1024px) 80px, 96px"
                                 />
                             </div>
                           )}
 
                           {/* Rating */}
-                          <div className="flex justify-center mb-3">
+                          <div className="flex justify-center mb-3 lg:mb-4">
                             {renderStars(review.rating)}
                           </div>
 
                           {/* Client info */}
-                          <div className="text-center mb-4">
-                            <div className="font-semibold text-gray-900 text-sm mb-1">
+                          <div className="text-center mb-4 lg:mb-5">
+                            <div className="font-semibold text-gray-900 text-sm lg:text-base mb-1">
                               {review.client_name}
                             </div>
-                            <div className="text-xs text-gray-600">
+                            <div className="text-xs lg:text-sm text-gray-600">
                               {review.city}
                             </div>
                           </div>
 
                           {/* Review preview */}
-                          <div className="text-xs text-gray-600 text-center italic line-clamp-3">
+                          <div className="text-xs lg:text-sm text-gray-600 text-center italic line-clamp-3">
                             &quot;{review.review_text.substring(0, 80)}...&quot;
                           </div>
                         </div>

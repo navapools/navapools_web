@@ -5,16 +5,19 @@ import type { SliceZoneType } from '@/types/slices';
 import PageBackground from '@/components/PageBackground';
 import type { PrismicImage, PrismicLink } from '@/types/slices';
 import { getHeroBackgroundData } from '@/prismic/heroBackground';
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 export const revalidate = 60;
 
-export default async function BlogDetail(props: unknown) {
-    const { params } = props as { params: Promise<{ locale: string; uid: string }> };
+export default async function BlogDetail({ params }: { params: Promise<{ locale: string; uid: string }> }) {
     const { locale, uid } = await params;
     const postRaw = await getBlogByUID(locale, uid);
     const postRec = postRaw as Record<string, unknown> | null;
 
-    if (!postRec) return <div className="p-6">Not found</div>;
+    if (!postRec) {
+        notFound();
+    }
 
     const data = (postRec['data'] as Record<string, unknown>) || {};
     const title = Array.isArray(data['title']) ? ((data['title'] as Array<Record<string, unknown>>)[0]?.text as string) || '' : (data['title'] as string) || '';
@@ -62,4 +65,29 @@ export default async function BlogDetail(props: unknown) {
             </div>
         </main>
     );
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; uid: string }> }): Promise<Metadata> {
+    const { locale, uid } = await params;
+    const postRaw = await getBlogByUID(locale, uid);
+    const postRec = postRaw as Record<string, unknown> | null;
+
+    if (!postRec) {
+        return {
+            title: 'Not Found',
+        };
+    }
+
+    const data = (postRec['data'] as Record<string, unknown>) || {};
+    const title = Array.isArray(data['title']) 
+        ? ((data['title'] as Array<Record<string, unknown>>)[0]?.text as string) || '' 
+        : (data['title'] as string) || '';
+    const description = Array.isArray(data['subtitle']) 
+        ? ((data['subtitle'] as Array<Record<string, unknown>>)[0]?.text as string) || '' 
+        : (data['subtitle'] as string) || '';
+
+    return {
+        title: title || 'Blog Post',
+        description: description || '',
+    };
 }

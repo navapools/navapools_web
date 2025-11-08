@@ -90,12 +90,12 @@ const ContactAlternate = ({ slice }: ContactAlternateProps) => {
                         className="flex flex-col items-center text-white hover:text-white/90 transition-colors"
                       >
                         {item.social_icon.url && (
-                          <div className="w-12 h-12 mb-2 rounded-full flex items-center justify-center bg-white/10">
+                          <div className="w-16 h-16 mb-2 rounded-full flex items-center justify-center bg-white/10">
                             <Image
                               src={item.social_icon.url}
                               alt={item.social_icon?.alt || item.social_text || ""}
-                              width={28}
-                              height={28}
+                              width={36}
+                              height={36}
                               className="object-contain"
                             />
                           </div>

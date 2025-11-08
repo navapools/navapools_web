@@ -108,7 +108,7 @@ export default function Plans({ slice }: SliceComponentProps) {
                         </div>
                       )}
                       <div className="p-6 bg-white">
-                        <h3 className="text-xl font-bold text-gray-800 mb-2">
+                        <h3 className="text-xl font-bold text-blue-900 mb-2">
                           {b.label}
                         </h3>
                         {b.sublabel && (
@@ -129,7 +129,7 @@ export default function Plans({ slice }: SliceComponentProps) {
           {/* Left copy */}
           <div className="lg:col-span-5">
             {sectionTitle && (
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
                 {sectionTitle}
               </h2>
             )}

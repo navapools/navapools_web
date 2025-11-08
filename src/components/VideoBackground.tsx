@@ -15,14 +15,30 @@ export default function VideoBackground({ videoUrl, mobileVideoUrl, className = 
   const normalizedMobileUrl = typeof mobileVideoUrl === 'string' ? mobileVideoUrl.trim() : '';
   const hasAnyVideoUrl = Boolean(normalizedDesktopUrl || normalizedMobileUrl);
 
+  // Debug en desarrollo
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('VideoBackground - Desktop URL:', normalizedDesktopUrl);
+      console.log('VideoBackground - Mobile URL:', normalizedMobileUrl);
+      console.log('VideoBackground - Has any URL:', hasAnyVideoUrl);
+    }
+  }, [normalizedDesktopUrl, normalizedMobileUrl, hasAnyVideoUrl]);
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !hasAnyVideoUrl) {
       return;
     }
 
-    const handleError = () => {
-      console.warn('Video failed to load');
+    const handleError = (e: Event) => {
+      const error = e.target as HTMLVideoElement;
+      console.error('Video failed to load:', {
+        error: error.error,
+        networkState: error.networkState,
+        readyState: error.readyState,
+        src: error.src,
+        currentSrc: error.currentSrc
+      });
       setHasError(true);
     };
 
