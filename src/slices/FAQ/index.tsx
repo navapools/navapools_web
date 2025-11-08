@@ -39,7 +39,7 @@ export default function FAQ({ slice }: SliceComponentProps) {
 
     return (
         <section 
-            className="relative overflow-hidden bg-gradient-to-br from-sky-400 via-sky-500 to-blue-700 h-[calc(100vh-64px)]"
+            className="relative overflow-visible bg-gradient-to-br from-sky-400 via-sky-500 to-blue-700 min-h-screen pt-[180px] md:pt-[220px] lg:pt-[260px]"
         >
             {/* Background image (optional) over the gradient to match Reviews aesthetic */}
             {backgroundImage?.url && (
@@ -55,8 +55,8 @@ export default function FAQ({ slice }: SliceComponentProps) {
 
             {/* Decorative angled shapes (same style as Reviews) */}
             <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -top-24 right-[-20%] w-[70%] h-56 bg-white/90 backdrop-blur-sm shadow-xl rotate-[-6deg] rounded-2xl" />
-                <div className="absolute -top-16 right-[-10%] w-[60%] h-40 bg-blue-600/70 rotate-[-6deg] rounded-2xl" />
+                <div className="absolute top-[100px] right-[-20%] w-[70%] h-56 bg-white/90 backdrop-blur-sm shadow-xl rotate-[-6deg] rounded-2xl" />
+                <div className="absolute top-[140px] right-[-10%] w-[60%] h-40 bg-blue-600/70 rotate-[-6deg] rounded-2xl" />
             </div>
 
             {/* Contrast overlay for readability (radial gradient like Reviews) */}
@@ -69,17 +69,17 @@ export default function FAQ({ slice }: SliceComponentProps) {
                 }}
             />
 
-            <div className="relative z-10 container mx-auto px-4 md:px-8 h-full flex items-center">
-                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center py-8">
+            <div className="relative z-10 container mx-auto px-4 md:px-8 pb-16 md:pb-20">
+                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
                     {/* Left: copy + accordion */}
                     <div>
                         <Reveal direction="up">
-                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
                                 {sectionTitle}
                             </h2>
                         </Reveal>
 
-                        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
+                        <div className="space-y-6">
                             {faqs.length === 0 ? (
                                 <div className="text-gray-600">
                                     Configure preguntas y respuestas en Prismic para mostrarlas aquí.

@@ -33,6 +33,23 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     return {
         title: siteName,
         description,
+        metadataBase: new URL(baseUrl),
+        icons: {
+            icon: [
+                { url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+                { url: '/icons/favicon-16x16.png', sizes: '16x16', type: 'image/png' }
+            ],
+            apple: [
+                { url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+            ],
+            other: [
+                {
+                    rel: 'mask-icon',
+                    url: '/icons/safari-pinned-tab.svg',
+                    color: '#0284c7'
+                }
+            ]
+        },
         openGraph: {
             title: siteName,
             description,
@@ -41,17 +58,19 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
             type: 'website',
             images: [
                 {
-                    url: `${baseUrl}/NavaPools_logo.png`,
+                    url: '/icons/og-image.png',
                     width: 1200,
                     height: 630,
                     alt: siteName,
                 },
             ],
+            locale: locale,
         },
         twitter: {
             card: 'summary_large_image',
             title: siteName,
             description,
+            images: ['/icons/og-image.png'],
         },
         alternates: {
             canonical: baseUrl,
