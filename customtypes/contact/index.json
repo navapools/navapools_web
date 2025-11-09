@@ -56,6 +56,34 @@
       "seo_image": {
         "type": "Image",
         "config": { "label": "SEO/Open Graph Image" }
+      },
+      "about_title": {
+        "type": "Text",
+        "config": { "label": "About Us Title", "placeholder": "About Us" }
+      },
+      "about_subtitle": {
+        "type": "Text",
+        "config": { "label": "About Us Subtitle", "placeholder": "Learn more about our company" }
+      },
+      "about_description": {
+        "type": "StructuredText",
+        "config": {
+          "label": "About Us Description",
+          "placeholder": "Write about your company...",
+          "allowTargetBlank": true,
+          "multi": "paragraph,strong,em,hyperlink"
+        }
+      },
+      "about_image": {
+        "type": "Image",
+        "config": {
+          "label": "About Us Image",
+          "constraint": {
+            "width": 1200,
+            "height": 800
+          },
+          "thumbnails": []
+        }
       }
     }
   },

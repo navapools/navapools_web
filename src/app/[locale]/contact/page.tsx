@@ -1,4 +1,6 @@
 import { getContact } from "@/prismic/queries";
+import { PrismicRichText } from '@prismicio/react';
+import Image from 'next/image';
 import type { Metadata } from "next";
 import ContactForm from "./ContactForm";
 
@@ -42,38 +44,39 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 				}}
 			/>
 
-			<div className="relative z-10 max-w-7xl mx-auto px-6 pb-16 md:pb-20">
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+			<div className="relative z-10 max-w-[1400px] mx-auto px-6 pb-16 md:pb-20">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
 					{/* About Us Section */}
 					<div className="relative">
-						<div className="max-w-xl">
-							<h2 className="text-3xl md:text-4xl font-bold text-white mb-4">About Us</h2>
-							<h3 className="text-xl text-sky-100 mb-4">Your Swimming Pool Experts</h3>
-							<div className="prose prose-lg prose-invert">
-								<p className="text-sky-100 mb-6">
-									With over two decades of experience in pool construction and maintenance, 
-									we take pride in creating the perfect aquatic environments for our clients. 
-									Our team of experts combines technical expertise with artistic vision to 
-									deliver exceptional results that exceed expectations.
-								</p>
-								<p className="text-sky-100">
-									Whether you&apos;re dreaming of a luxurious backyard oasis or seeking professional 
-									maintenance services, our dedicated team is here to help turn your vision into reality. 
-									We believe in building lasting relationships with our clients through quality work 
-									and outstanding service.
-								</p>
+						<div>
+							<h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">{contactCopy.about_title}</h2>
+							<h3 className="text-xl md:text-2xl text-blue-900 mb-6">{contactCopy.about_subtitle}</h3>
+							<div className="prose prose-lg prose-invert mb-8 [&_p]:text-white [&_li]:text-white [&_strong]:text-white [&_a]:text-white">
+								<PrismicRichText field={contactCopy.about_description as import('@prismicio/client').RichTextField} />
 							</div>
+							{contactCopy.about_image && (
+								<div className="mt-8 rounded-lg overflow-hidden shadow-xl transform transition-transform hover:scale-105">
+									<Image
+										src={contactCopy.about_image.url}
+										alt={contactCopy.about_image.alt || 'About Us'}
+										className="w-full h-auto object-cover rounded-lg"
+										width={contactCopy.about_image.dimensions?.width || 1200}
+										height={contactCopy.about_image.dimensions?.height || 800}
+										priority={false}
+									/>
+								</div>
+							)}
 						</div>
 					</div>
 
 					{/* Contact Form Section */}
 					<div>
-						<h2 className="text-3xl md:text-4xl font-bold text-white mb-1">{contactCopy.title}</h2>
+						<h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-1">{contactCopy.title}</h2>
 						{contactCopy.subtitle ? (
-							<p className="text-sky-100 mb-4">{contactCopy.subtitle}</p>
+							<p className="text-white mb-4">{contactCopy.subtitle}</p>
 						) : null}
 						{contactCopy.description ? (
-							<p className="text-sky-100/90 mb-6">{contactCopy.description}</p>
+							<p className="text-white/90 mb-6">{contactCopy.description}</p>
 						) : null}
 
 						{/* White card for the form to ensure accessibility and contrast */}

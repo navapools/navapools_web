@@ -33,11 +33,35 @@ export async function POST(request: Request) {
 
         const subjectAdmin = `Website contact from ${trimmedName}`;
         const htmlAdmin = `
-            <table style="border-collapse:collapse;width:100%" border="1" cellpadding="8">
-                <tr><th align="left">Name</th><td>${trimmedName}</td></tr>
-                <tr><th align="left">Email</th><td>${trimmedEmail}</td></tr>
-                <tr><th align="left">Message</th><td>${String(trimmedMessage).replace(/\n/g, '<br/>')}</td></tr>
-            </table>
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h1 style="color: #0066cc; margin-bottom: 20px;">New Contact Request Received</h1>
+                <p style="color: #444; font-size: 16px; margin-bottom: 30px;">
+                    A new contact request has been submitted through the website. Below you will find the details provided by the potential client:
+                </p>
+
+                <table style="border-collapse: collapse; width: 100%; margin: 20px 0; border: 1px solid #ddd;">
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; color: #0066cc;">Name</th>
+                        <td style="padding: 12px; border: 1px solid #ddd;">${trimmedName}</td>
+                    </tr>
+                    <tr>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; color: #0066cc;">Email</th>
+                        <td style="padding: 12px; border: 1px solid #ddd;">${trimmedEmail}</td>
+                    </tr>
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; color: #0066cc;">Message</th>
+                        <td style="padding: 12px; border: 1px solid #ddd;">${String(trimmedMessage).replace(/\n/g, '<br/>')}</td>
+                    </tr>
+                </table>
+
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; color: #666; font-size: 14px;">
+                    <p>This message was automatically sent from the website contact form.</p>
+                    <p style="margin-top: 20px;">
+                        <strong style="color: #0066cc;">NavaPools Website</strong><br>
+                        <em>Your Florida Oasis, Always Perfect</em>
+                    </p>
+                </div>
+            </div>
         `;
 
         const resolvedFrom = process.env.MAILERSEND_FROM as string; // must be verified in MailerSend
@@ -67,7 +91,7 @@ export async function POST(request: Request) {
             try {
                 // @ts-expect-error - MailerSend error type includes response.body
                 details = err?.response?.body || err?.response || (err instanceof Error ? err.message : String(err));
-            } catch (_) {
+            } catch {
                 details = String(err);
             }
             console.error('MailerSend admin email details:', details);

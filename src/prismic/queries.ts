@@ -161,19 +161,21 @@ export async function getAllBlogs(locale: string) {
         return (docs || []).map((d: unknown) => {
             const doc = d as Record<string, unknown>;
             const data = (doc.data as Record<string, unknown>) || {};
-            const title = Array.isArray(data.title) ? data.title[0]?.text : data.title;
-            const subtitle = Array.isArray(data.subtitle) ? data.subtitle[0]?.text : data.subtitle;
-            const excerpt = Array.isArray(data.excerpt) ? data.excerpt[0]?.text : data.excerpt;
-            const docRec = doc as Record<string, unknown>;
-            return {
-                id: String(docRec['id'] || ''),
-                uid: String(docRec['uid'] || ''),
-                title: title || '',
-                subtitle: subtitle || '',
-                excerpt: excerpt || '',
-                url: `/${locale}/blog/${String(docRec['uid'] || '')}`,
-                last_publication_date: (docRec['last_publication_date'] as string) || (docRec['first_publication_date'] as string) || null,
-            };
+                const title = Array.isArray(data.title) ? data.title[0]?.text : data.title;
+                const subtitle = Array.isArray(data.subtitle) ? data.subtitle[0]?.text : data.subtitle;
+                const excerpt = Array.isArray(data.excerpt) ? data.excerpt[0]?.text : data.excerpt;
+                const content = data.content || null;
+                const docRec = doc as Record<string, unknown>;
+                return {
+                    id: String(docRec['id'] || ''),
+                    uid: String(docRec['uid'] || ''),
+                    title: title || '',
+                    subtitle: subtitle || '',
+                    excerpt: excerpt || '',
+                    content: content,
+                    url: `/${locale}/blog/${String(docRec['uid'] || '')}`,
+                    last_publication_date: (docRec['last_publication_date'] as string) || (docRec['first_publication_date'] as string) || null,
+                };
         });
     } catch (error) {
         console.warn('Error fetching blogs from Prismic:', error);
@@ -198,6 +200,10 @@ export async function getContact(locale: string) {
             success_title: (data?.success_title as string) || 'Message sent!',
             success_message: (data?.success_message as string) || "Thank you for contacting us. We'll get back to you soon.",
             error_message: (data?.error_message as string) || 'Error sending message. Please try again.',
+            about_title: (data?.about_title as string) || 'About Us',
+            about_subtitle: (data?.about_subtitle as string) || 'Learn more about our company',
+            about_description: data?.about_description || null,
+            about_image: (data?.about_image as { url: string; alt?: string; dimensions?: { width: number; height: number } }) || null,
             seo: {
                 title: (data?.seo_title as string) || (data?.title as string) || 'Contact',
                 description: (data?.seo_description as string) || (data?.description as string) || '',

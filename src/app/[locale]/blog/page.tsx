@@ -15,7 +15,7 @@ export default async function BlogListPage(props: unknown) {
     const heroBackground = await getHeroBackgroundData(locale);
 
     return (
-                <main className="relative h-[calc(100vh-64px)]">
+                <main className="relative min-h-[calc(100vh-64px)]">
             {/* Background del HERO */}
             <PageBackground 
                 background_image={heroBackground.background_image}
@@ -24,7 +24,7 @@ export default async function BlogListPage(props: unknown) {
             />
             
             {/* Content */}
-            <div className="relative z-10 max-w-4xl mx-auto px-6 h-full flex flex-col justify-center">
+            <div className="relative z-10 max-w-4xl mx-auto px-6 pt-32 md:pt-40">
                 <div className="py-8">
                     <h1 className="text-4xl font-bold mb-8 text-white">Blog</h1>
                     <ul className="space-y-6">

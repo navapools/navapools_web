@@ -61,7 +61,7 @@ export default function ContactForm({ locale, copy }: ContactFormProps) {
 		<>
 			<form className="space-y-6" onSubmit={onSubmit}>
 				<input 
-					className="w-full border p-3 rounded-lg text-lg" 
+					className="w-full border p-3 rounded-lg text-lg text-gray-900 placeholder-gray-500 placeholder-opacity-100" 
 					placeholder={copy.name_placeholder} 
 					value={name} 
 					onChange={(e) => setName(e.target.value)} 
@@ -69,7 +69,7 @@ export default function ContactForm({ locale, copy }: ContactFormProps) {
 					disabled={isSubmitting}
 				/>
 				<input 
-					className="w-full border p-3 rounded-lg text-lg" 
+					className="w-full border p-3 rounded-lg text-lg text-gray-900 placeholder-gray-500 placeholder-opacity-100" 
 					placeholder={copy.email_placeholder} 
 					type="email" 
 					value={email} 
@@ -78,7 +78,7 @@ export default function ContactForm({ locale, copy }: ContactFormProps) {
 					disabled={isSubmitting}
 				/>
 				<textarea 
-					className="w-full border p-3 rounded-lg text-lg" 
+					className="w-full border p-3 rounded-lg text-lg text-gray-900 placeholder-gray-500 placeholder-opacity-100" 
 					placeholder={copy.message_placeholder} 
 					rows={8} 
 					value={message} 
@@ -97,7 +97,7 @@ export default function ContactForm({ locale, copy }: ContactFormProps) {
 			
 			{/* Success Message */}
 			{status === "SUCCESS" && (
-				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+				<div className="fixed inset-0 bg-black/5 backdrop-blur-sm flex items-center justify-center z-50">
 					<div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-4">
 						<div className="text-center">
 							<div className="text-green-500 text-4xl mb-4">✓</div>
@@ -109,7 +109,7 @@ export default function ContactForm({ locale, copy }: ContactFormProps) {
 							</p>
 							<button 
 								onClick={() => setStatus(null)}
-								className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
+								className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
 							>
 								{locale === "es" ? "Cerrar" : "Close"}
 							</button>
