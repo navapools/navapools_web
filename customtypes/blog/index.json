@@ -32,7 +32,7 @@
               "fieldset": "Paragraph",
               "display": "list",
               "non-repeat": {
-                "text": { "type": "StructuredText", "config": { "multi": "paragraph" } }
+                "text": { "type": "StructuredText", "config": { "multi": "paragraph,strong,em,hyperlink" } }
               },
               "repeat": {}
             },

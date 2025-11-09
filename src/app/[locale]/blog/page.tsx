@@ -29,13 +29,27 @@ export default async function BlogListPage(props: unknown) {
                     <h1 className="text-4xl font-bold mb-8 text-blue-300 text-shadow-white-lg">Blog</h1>
                     <ul className="space-y-6">
                         {blogs.map((b: unknown) => {
-                            const blog = b as Record<string, unknown> & { id?: string; uid?: string; title?: string; subtitle?: string; excerpt?: string };
+                            const blog = b as Record<string, unknown> & { 
+                                id?: string;
+                                uid?: string;
+                                title?: string;
+                                subtitle?: string;
+                                excerpt?: string;
+                                last_publication_date?: string;
+                            };
                             return (
                                 <li key={blog.id} className="border border-white/20 p-6 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/15 transition-colors">
                                     <Link href={`/${locale}/blog/${blog.uid}`} className="no-underline block">
                                         <h2 className="text-2xl font-semibold text-blue-300  mb-2">{blog.title}</h2>
                                         {blog.subtitle && <p className="text-lg italic text-white mb-2">{blog.subtitle}</p>}
                                         {blog.excerpt && <p className="text-white text-lg">{blog.excerpt}</p>}
+                                        <p className="text-sm text-white/70 mt-4">
+                                            {blog.last_publication_date && (
+                                                <>
+                                                    Last updated: {new Date(blog.last_publication_date).toLocaleDateString(locale)}
+                                                </>
+                                            )}
+                                        </p>
                                     </Link>
                                 </li>
                             );
