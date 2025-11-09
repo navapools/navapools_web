@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "optimize:images": "node ./scripts/optimize-logo.js",
     "lint": "eslint",
     "slicemachine": "start-slicemachine"
   },
@@ -26,6 +27,7 @@
     "react-player": "^3.3.3"
   },
   "devDependencies": {
+    "sharp": "^0.32.0",
     "@eslint/eslintrc": "^3",
     "@prismicio/types": "^0.2.9",
     "@slicemachine/adapter-next": "^0.3.84",

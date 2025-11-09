@@ -128,7 +128,12 @@ export default async function LocaleLayout({
                                     height={397}
                                     className="w-auto h-auto object-contain max-h-[140px] md:max-h-[180px] lg:max-h-[240px]"
                                     priority
-                                    unoptimized
+                                    // Let Next.js optimize this local image so it can serve
+                                    // modern formats and responsive sizes for LCP.
+                                    // Provide a reasonable quality and sizes heuristic
+                                    // matching the header's max heights.
+                                    quality={80}
+                                    sizes="(max-width: 768px) 140px, (max-width: 1024px) 180px, 240px"
                                 />
                         </Link>
                     </div>
