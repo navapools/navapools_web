@@ -84,3 +84,8 @@ body {
 .text-shadow-sm { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
 .text-shadow { text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); }
 .text-shadow-lg { text-shadow: 0 6px 14px rgba(0, 0, 0, 0.45); }
+
+/* White text-shadow utilities for titles over dark/light backgrounds */
+.text-shadow-white-sm { text-shadow: 0 1px 3px rgba(255, 255, 255, 0.85); }
+.text-shadow-white { text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9); }
+.text-shadow-white-lg { text-shadow: 0 8px 26px rgba(255, 255, 255, 0.92); }

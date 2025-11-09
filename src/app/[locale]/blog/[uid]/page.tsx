@@ -46,11 +46,11 @@ export default async function BlogDetail({ params }: { params: Promise<{ locale:
             />
             
             {/* Content */}
-            <div className="relative z-10 max-w-3xl mx-auto p-6 pt-28 md:pt-32">
-                <h1 className="text-3xl font-bold mb-2 text-white">{title}</h1>
-                {subtitle && <h2 className="text-lg text-gray-200 mb-4">{subtitle}</h2>}
+            <div className="relative z-10 max-w-3xl mx-auto p-6 pt-[120px] md:pt-[220px] lg:pt-[260px]">
+                <h1 className="text-3xl font-bold mb-2 text-blue-300 text-shadow-white-lg">{title}</h1>
+                {subtitle && <h2 className="text-lg italic text-white text-shadow-white mb-4">{subtitle}</h2>}
 
-                <article className="prose prose-invert max-w-none">
+                <article className="prose max-w-none text-white text-lg prose-headings:text-blue-900 prose-headings:text-shadow-white prose-a:text-indigo-700">
                     {(() => {
                         const body = data.body as unknown;
                         if (Array.isArray(body)) {

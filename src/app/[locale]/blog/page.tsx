@@ -24,18 +24,18 @@ export default async function BlogListPage(props: unknown) {
             />
             
             {/* Content */}
-            <div className="relative z-10 max-w-4xl mx-auto px-6 pt-32 md:pt-40">
+            <div className="relative z-10 max-w-4xl mx-auto px-6 pt-[120px] md:pt-[220px] lg:pt-[260px]">
                 <div className="py-8">
-                    <h1 className="text-4xl font-bold mb-8 text-white">Blog</h1>
+                    <h1 className="text-4xl font-bold mb-8 text-blue-300 text-shadow-white-lg">Blog</h1>
                     <ul className="space-y-6">
                         {blogs.map((b: unknown) => {
                             const blog = b as Record<string, unknown> & { id?: string; uid?: string; title?: string; subtitle?: string; excerpt?: string };
                             return (
                                 <li key={blog.id} className="border border-white/20 p-6 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/15 transition-colors">
                                     <Link href={`/${locale}/blog/${blog.uid}`} className="no-underline block">
-                                        <h2 className="text-2xl font-semibold text-white mb-2">{blog.title}</h2>
-                                        {blog.subtitle && <p className="text-base text-gray-200 mb-2">{blog.subtitle}</p>}
-                                        {blog.excerpt && <p className="text-gray-100">{blog.excerpt}</p>}
+                                        <h2 className="text-2xl font-semibold text-blue-300  mb-2">{blog.title}</h2>
+                                        {blog.subtitle && <p className="text-lg italic text-white mb-2">{blog.subtitle}</p>}
+                                        {blog.excerpt && <p className="text-white text-lg">{blog.excerpt}</p>}
                                     </Link>
                                 </li>
                             );
