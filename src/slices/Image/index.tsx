@@ -13,7 +13,16 @@ export default function ImageSlice({ slice }: SliceComponentProps) {
 
 	return (
 		<div className="mx-auto my-6 max-w-3xl">
-			<NextImage src={url} alt={alt} width={width} height={height} className="w-full h-auto rounded" />
+			<NextImage
+				src={url}
+				alt={alt}
+				width={width}
+				height={height}
+				className="w-full h-auto rounded"
+				// Use reasonable quality and sizes hints for responsive delivery
+				quality={75}
+				sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+			/>
 		</div>
 	);
 }

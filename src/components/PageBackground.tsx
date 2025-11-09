@@ -28,14 +28,18 @@ export default function PageBackground({
                     videoUrl={normalizedVideoUrl}
                     mobileVideoUrl={normalizedMobileVideoUrl}
                 />
-            ) : background_image?.url ? (
+                ) : background_image?.url ? (
                 <Image
                     src={background_image.url}
                     alt={background_image.alt || ""}
                     fill
                     className="object-cover"
-                    quality={100}
-                    priority
+                    // Lower quality for large background images to save bytes on mobile
+                    quality={75}
+                    // Tell Next how much space the image will take so it can generate
+                    // appropriate responsive srcsets. Full-bleed backgrounds occupy
+                    // the viewport width on mobile.
+                    sizes="100vw"
                 />
             ) : (
                 // Fallback background cuando no hay video ni imagen

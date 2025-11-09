@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
 			{ protocol: "https", hostname: "images.prismic.io" },
 			{ protocol: "https", hostname: "navapools.cdn.prismic.io" }
 		],
+		// Prefer modern formats where supported; Next will still fall back to
+		// supported formats for older browsers.
+		formats: ['image/avif', 'image/webp'],
 	},
 	// Temporarily disabled to avoid potential build chunking issues that
 	// can surface as "Cannot find module './XXXX.js'" during prerender.
