@@ -12,7 +12,7 @@ export async function POST(request: Request) {
             hasFrom: !!process.env.MAILERSEND_FROM,
             hasAdminTo: !!process.env.MAILERSEND_ADMIN_TO,
         });
-        const { name, email, message } = body || {};
+    const { name, email, message, type } = body || {};
 
         const trimmedEmail = typeof email === "string" ? email.trim() : "";
         const trimmedMessage = typeof message === "string" ? message.trim() : "";
@@ -23,7 +23,6 @@ export async function POST(request: Request) {
         }
 
 
-        const adminFrom = process.env.SENDGRID_FROM as string;
         if (!process.env.MAILERSEND_TOKEN) {
             return NextResponse.json({ error: "MAILERSEND_TOKEN is missing" }, { status: 500 });
         }
@@ -31,40 +30,64 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: "MAILERSEND_FROM is missing. Set it to a verified domain email in MailerSend (e.g., no-reply@yourdomain.com)." }, { status: 500 });
         }
 
-        const subjectAdmin = `Website contact from ${trimmedName}`;
-        const htmlAdmin = `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                <h1 style="color: #0066cc; margin-bottom: 20px;">New Contact Request Received</h1>
-                <p style="color: #444; font-size: 16px; margin-bottom: 30px;">
-                    A new contact request has been submitted through the website. Below you will find the details provided by the potential client:
-                </p>
-
-                <table style="border-collapse: collapse; width: 100%; margin: 20px 0; border: 1px solid #ddd;">
-                    <tr style="background-color: #f8f9fa;">
-                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; color: #0066cc;">Name</th>
-                        <td style="padding: 12px; border: 1px solid #ddd;">${trimmedName}</td>
-                    </tr>
-                    <tr>
-                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; color: #0066cc;">Email</th>
-                        <td style="padding: 12px; border: 1px solid #ddd;">${trimmedEmail}</td>
-                    </tr>
-                    <tr style="background-color: #f8f9fa;">
-                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; color: #0066cc;">Message</th>
-                        <td style="padding: 12px; border: 1px solid #ddd;">${String(trimmedMessage).replace(/\n/g, '<br/>')}</td>
-                    </tr>
-                </table>
-
-                <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; color: #666; font-size: 14px;">
-                    <p>This message was automatically sent from the website contact form.</p>
-                    <p style="margin-top: 20px;">
-                        <strong style="color: #0066cc;">NavaPools Website</strong><br>
-                        <em>Your Florida Oasis, Always Perfect</em>
+        // If payload is a subscribe-type (from ContactAlternate) we send a minimal admin notification
+        const isSubscribe = String(type || "").toLowerCase() === "subscribe";
+    if (isSubscribe) console.log('Request marked as subscribe -> admin only, skipping user confirmation.');
+        const subjectAdmin = isSubscribe ? `New subscription: ${trimmedEmail}` : `Website contact from ${trimmedName}`;
+        const htmlAdmin = isSubscribe
+            ? `
+                <div style="font-family: Arial, sans-serif; max-width:600px; margin:0 auto;">
+                  <div style="padding:20px; background:#fff; border-radius:8px;">
+                    <h2 style="color:#0b3a66; margin-bottom:12px;">New subscription received</h2>
+                    <p style="font-size:15px; color:#333; margin-bottom:12px;">An email has been registered via the site subscription:</p>
+                    <p style="font-size:18px; font-weight:700; color:#0b3a66; margin:0 0 12px;">${trimmedEmail}</p>
+                    <p style="font-size:13px; color:#666; margin-top:8px;">Source: website subscription form</p>
+                                        <div style="margin-top:20px; color:#666; font-size:14px;">
+                                            <p>This message was automatically sent from the website contact form.</p>
+                                            <p style="margin-top:8px;">
+                                                <strong style="color:#0b3a66;">NavaPools Website</strong><br/>
+                                                <em>Your Florida Oasis, Always Perfect</em>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+              `
+            : `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h1 style="color: #0066cc; margin-bottom: 20px;">New Contact Request Received</h1>
+                    <p style="color: #444; font-size: 16px; margin-bottom: 30px;">
+                        A new contact request has been submitted through the website. Below you will find the details provided by the potential client:
                     </p>
+
+                    <table style="border-collapse: collapse; width: 100%; margin: 20px 0; border: 1px solid #ddd;">
+                        <tr style="background-color: #f8f9fa;">
+                            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; color: #0066cc;">Name</th>
+                            <td style="padding: 12px; border: 1px solid #ddd;">${trimmedName}</td>
+                        </tr>
+                        <tr>
+                            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; color: #0066cc;">Email</th>
+                            <td style="padding: 12px; border: 1px solid #ddd;">${trimmedEmail}</td>
+                        </tr>
+                        <tr style="background-color: #f8f9fa;">
+                            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; color: #0066cc;">Message</th>
+                            <td style="padding: 12px; border: 1px solid #ddd;">${String(trimmedMessage).replace(/\n/g, '<br/>')}</td>
+                        </tr>
+                    </table>
+
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; color: #666; font-size: 14px;">
+                        <p>This message was automatically sent from the website contact form.</p>
+                        <p style="margin-top: 20px;">
+                            <strong style="color: #0b3a66;">NavaPools Website</strong><br>
+                            <em>Your Florida Oasis, Always Perfect</em>
+                        </p>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
 
         const resolvedFrom = process.env.MAILERSEND_FROM as string; // must be verified in MailerSend
+        if (!process.env.MAILERSEND_ADMIN_TO) {
+            return NextResponse.json({ error: "MAILERSEND_ADMIN_TO is missing. Set it to the admin inbox that should receive contact notifications." }, { status: 500 });
+        }
         console.log('MailerSend config:', {
             hasToken: !!process.env.MAILERSEND_TOKEN,
             mailersendFrom: process.env.MAILERSEND_FROM,
@@ -73,10 +96,11 @@ export async function POST(request: Request) {
         });
         const sender = new Sender(resolvedFrom, "NavaPools");
 
-        // 1) Send to admin inbox
+        // 1) Send to admin inbox (explicit MAILERSEND_ADMIN_TO required)
+        const adminTo = process.env.MAILERSEND_ADMIN_TO as string;
         const adminEmailParams = new EmailParams()
             .setFrom(sender)
-            .setTo([new Recipient(process.env.MAILERSEND_ADMIN_TO || adminFrom || resolvedFrom)])
+            .setTo([new Recipient(adminTo)])
             .setSubject(subjectAdmin)
             .setHtml(htmlAdmin)
             .setReplyTo(new Sender(trimmedEmail, trimmedName));
@@ -98,25 +122,19 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: "MailerSend admin email failed", details }, { status: 500 });
         }
 
-        // 2) Confirmation to user (localized) - DISABLED
-        // const isSpanish = (locale || "en").startsWith("es");
-        // const subjectUser = isSpanish ? "Hemos recibido tu mensaje" : "We received your message";
-        // const bodyUser = isSpanish
-        //     ? `Hola ${trimmedName},<br/><br/>Gracias por contactarnos. Tu mensaje fue recibido y nuestro equipo te contactará pronto.<br/><br/>Saludos,<br/>NavaPools`
-        //     : `Hi ${trimmedName},<br/><br/>Thanks for reaching out. We received your message and our team will contact you shortly.<br/><br/>Best regards,<br/>NavaPools`;
+                    // 2) Confirmation to user (localized) - ENABLED, but skip for subscribe-type
+                    if (!isSubscribe) {
+        
+                        const locale = (body && body.locale) || "en";
+                        // user confirmation email content is intentionally disabled (not sent)
+                        // If you enable sending to users later, you can reintroduce subjectUser and htmlUser here.
 
-        // User confirmation email disabled as requested
-        // const userEmailParams = new EmailParams()
-        //     .setFrom(sender)
-        //     .setTo([new Recipient(trimmedEmail, trimmedName || undefined)])
-        //     .setSubject(subjectUser)
-        //     .setHtml(bodyUser);
-        // try {
-        //     await mailerSend.email.send(userEmailParams);
-        // } catch (err: any) {
-        //     console.error('MailerSend user email error:', err?.response || err);
-        //     return NextResponse.json({ error: "MailerSend user email failed", details: err?.response || String(err) }, { status: 500 });
-        // }
+                            // User confirmation emails are disabled by default to avoid trial-account delivery errors.
+                            // Admin notification was already sent above. If you need user confirmations enabled,
+                            // set an environment flag or upgrade the MailerSend account and we can re-enable this.
+                            console.log('User confirmation is disabled; admin notification was sent to', adminTo);
+
+                        }
 
 		return NextResponse.json({ ok: true });
 	} catch (error) {
