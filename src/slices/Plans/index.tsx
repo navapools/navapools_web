@@ -23,6 +23,8 @@ export default function Plans({ slice }: SliceComponentProps) {
   const primary = slice.primary as unknown as {
     section_title?: string;
     section_subtitle?: string;
+    service_title?: string;
+    service_subtitle?: string;
     badges?: Array<{
       icon?: PrismicImage;
       label?: string;
@@ -41,6 +43,8 @@ export default function Plans({ slice }: SliceComponentProps) {
 
   const sectionTitle = primary?.section_title || "";
   const sectionSubtitle = primary?.section_subtitle || "";
+  const serviceTitle = primary?.service_title || "";
+  const serviceSubtitle = primary?.service_subtitle || "";
   const badges: Badge[] = (primary?.badges || []).map((b) => ({
     icon: (b.icon || {}) as PrismicImage,
     label: b.label || "",
@@ -86,6 +90,26 @@ export default function Plans({ slice }: SliceComponentProps) {
       </div>
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
+        {/* Service header (from Prismic) - shown above badges */}
+        {(serviceTitle || serviceSubtitle) && (
+          <Reveal direction="up">
+            <div className="mb-8 lg:mb-24">
+              <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-12 mb-6">
+                {serviceTitle && (
+                  <h2 className="text-4xl md:text-5xl font-bold text-blue-900 leading-tight lg:pr-4">
+                    {serviceTitle}
+                  </h2>
+                )}
+                {serviceSubtitle && (
+                  <p className="mt-2 lg:mt-0 text-lg md:text-xl text-gray-600 max-w-xl text-left">
+                    {serviceSubtitle}
+                  </p>
+                )}
+              </div>
+            </div>
+          </Reveal>
+        )}
+
         {/* Top badges section */}
         {badges.length > 0 && (
           <div className="mb-16">

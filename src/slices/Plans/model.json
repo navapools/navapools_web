@@ -12,6 +12,20 @@
       "description": "",
       "imageUrl": "",
       "primary": {
+        "service_title": {
+          "type": "Text",
+          "config": {
+            "label": "Service Title",
+            "placeholder": "Servicio"
+          }
+        },
+        "service_subtitle": {
+          "type": "Text",
+          "config": {
+            "label": "Service Subtitle",
+            "placeholder": "Breve descripción del servicio"
+          }
+        },
         "section_title": {
           "type": "Text",
           "config": {
