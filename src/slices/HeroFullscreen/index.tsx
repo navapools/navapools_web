@@ -100,6 +100,7 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
     }
 
     return (
+        <>
         <section className="relative min-h-screen flex items-center overflow-hidden">
             {/* Background Video or Image */}
             {video_url ? (
@@ -131,7 +132,7 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4">
                     <div className="w-full md:w-1/2 text-left text-white">
                         <Reveal direction="left">
-                            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+                            <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight iphone-se-title">
                                 {title}
                             </h1>
                         </Reveal>
@@ -187,5 +188,16 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
                 </svg>
             </div>
         </section>
+
+        {/* iPhone SE specific override: reduce h1 to text-4xl (2.25rem) only on 375x667 portrait */}
+        <style jsx>{`
+            @media only screen and (max-width: 375px) and (max-height: 667px) and (orientation: portrait) {
+                .iphone-se-title {
+                    font-size: 2.25rem !important; /* Tailwind text-4xl */
+                    line-height: 1.1 !important;
+                }
+            }
+        `}</style>
+        </>
     );
 }
