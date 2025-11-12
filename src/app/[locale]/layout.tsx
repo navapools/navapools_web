@@ -118,7 +118,7 @@ export default async function LocaleLayout({
             <HashScrollHandler />
             <div className="min-h-screen antialiased">
                 {/* Header con altura responsiva para controlar el tamaño del logo sin mover el menú */}
-                <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-2">
+                <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4">
                     <div className="flex items-center">
                         <Link href={`/${locale}`} className="cursor-pointer hover:opacity-80 transition-opacity">
                                 <Image 
@@ -126,14 +126,14 @@ export default async function LocaleLayout({
                                     alt={settings.data.site_name || "NavaPools"} 
                                     width={1200} 
                                     height={397}
-                                    className="w-auto h-auto object-contain max-h-[140px] md:max-h-[180px] lg:max-h-[240px]"
+                                    className="w-auto h-auto object-contain max-h-[180px] md:max-h-[260px] lg:max-h-[320px]"
                                     priority
                                     // Let Next.js optimize this local image so it can serve
                                     // modern formats and responsive sizes for LCP.
                                     // Provide a reasonable quality and sizes heuristic
                                     // matching the header's max heights.
                                     quality={80}
-                                    sizes="(max-width: 768px) 140px, (max-width: 1024px) 180px, 240px"
+                                    sizes="(max-width: 768px) 180px, (max-width: 1024px) 260px, 320px"
                                 />
                         </Link>
                     </div>

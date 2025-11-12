@@ -213,12 +213,6 @@ export default function Reviews({ slice }: SliceComponentProps) {
         .-rotate-y-45 {
           transform: rotateY(-45deg);
         }
-        .line-clamp-3 {
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
       `}</style>
       <section 
         id="testimonials"
@@ -391,8 +385,8 @@ export default function Reviews({ slice }: SliceComponentProps) {
                           </div>
 
                           {/* Review preview */}
-                          <div className="text-xs lg:text-sm text-gray-600 text-center italic line-clamp-3">
-                            &quot;{review.review_text.substring(0, 80)}...&quot;
+                          <div className="text-xs lg:text-sm text-gray-600 text-center italic">
+                            &quot;{review.review_text}&quot;
                           </div>
                         </div>
                       </div>

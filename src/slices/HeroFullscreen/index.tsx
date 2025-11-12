@@ -128,41 +128,45 @@ export default function HeroFullscreen({ slice }: SliceComponentProps) {
             
             {/* Content Container */}
             <div className="relative z-10 container mx-auto px-6 sm:px-8">
-                <div className="flex justify-start">
-                    <div className="w-full max-w-xl text-left text-white">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4">
+                    <div className="w-full md:w-1/2 text-left text-white">
                         <Reveal direction="left">
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
                                 {title}
                             </h1>
                         </Reveal>
                         <Reveal direction="left" delayMs={120}>
-                            <p className="text-base sm:text-lg md:text-xl mb-8 text-gray-100">
+                            <p className="text-lg sm:text-xl md:text-2xl mb-8 text-gray-100">
                                 {subtitle}
                             </p>
                         </Reveal>
-                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start items-stretch w-full">
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start items-stretch w-full md:w-auto">
                             {primary_cta_text && (
                                 <Reveal direction="left" delayMs={200}>
                                     <Link 
                                         href={{ pathname: primary_cta_link?.url || `/${locale}/contact` }}
-                                        className="block w-full sm:w-auto m-0 bg-indigo-700 hover:bg-indigo-800 text-white px-4 sm:px-6 py-3 lg:py-4 rounded-lg font-semibold text-base sm:text-lg transition-colors duration-300 text-center"
+                                        className="block w-full sm:w-auto m-0 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-4 sm:px-6 py-3 lg:py-4 rounded-lg font-semibold text-base sm:text-lg transition-colors duration-300 text-center border border-white/30"
                                     >
                                         {primary_cta_text}
                                     </Link>
                                 </Reveal>
                             )}
-                            {secondary_cta_text && (
-                                <Reveal direction="right" delayMs={260}>
-                                    <Link 
-                                        href={{ pathname: secondary_cta_link?.url || '#' }}
-                                        className="block w-full sm:w-auto m-0 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold px-4 sm:px-6 py-3 lg:py-4 rounded-lg transition-colors duration-300 text-center border border-white/30"
-                                    >
-                                        {secondary_cta_text}
-                                    </Link>
-                                </Reveal>
-                            )}
                         </div>
                     </div>
+                    
+                    {/* Secondary Button - visible on all devices */}
+                    {secondary_cta_text && (
+                        <div className="w-full md:w-auto">
+                            <Reveal direction="right" delayMs={260}>
+                                <Link 
+                                    href={{ pathname: secondary_cta_link?.url || '#' }}
+                                    className="block w-full md:w-auto m-0 bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-6 lg:px-8 py-4 lg:py-5 rounded-lg transition-colors duration-300 text-center text-base lg:text-lg"
+                                >
+                                    {secondary_cta_text}
+                                </Link>
+                            </Reveal>
+                        </div>
+                    )}
                 </div>
             </div>
 
