@@ -4,7 +4,7 @@ import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 const mailerSend = new MailerSend({ apiKey: process.env.MAILERSEND_TOKEN || "" });
 
 export async function POST(request: Request) {
-	try {
+    try {
         const body = await request.json();
         console.log('Contact API payload:', body);
         console.log('MailerSend Environment:', {
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
             hasFrom: !!process.env.MAILERSEND_FROM,
             hasAdminTo: !!process.env.MAILERSEND_ADMIN_TO,
         });
-    const { name, email, message, type } = body || {};
+        const { name, email, message, type } = body || {};
 
         const trimmedEmail = typeof email === "string" ? email.trim() : "";
         const trimmedMessage = typeof message === "string" ? message.trim() : "";
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
         // If payload is a subscribe-type (from ContactAlternate) we send a minimal admin notification
         const isSubscribe = String(type || "").toLowerCase() === "subscribe";
-    if (isSubscribe) console.log('Request marked as subscribe -> admin only, skipping user confirmation.');
+        if (isSubscribe) console.log('Request marked as subscribe -> admin only, skipping user confirmation.');
         const subjectAdmin = isSubscribe ? `New subscription: ${trimmedEmail}` : `Website contact from ${trimmedName}`;
         const htmlAdmin = isSubscribe
             ? `
@@ -122,23 +122,23 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: "MailerSend admin email failed", details }, { status: 500 });
         }
 
-                    // 2) Confirmation to user (localized) - ENABLED, but skip for subscribe-type
-                    if (!isSubscribe) {
-        
-                        const locale = (body && body.locale) || "en";
-                        // user confirmation email content is intentionally disabled (not sent)
-                        // If you enable sending to users later, you can reintroduce subjectUser and htmlUser here.
+        // 2) Confirmation to user (localized) - ENABLED, but skip for subscribe-type
+        if (!isSubscribe) {
 
-                            // User confirmation emails are disabled by default to avoid trial-account delivery errors.
-                            // Admin notification was already sent above. If you need user confirmations enabled,
-                            // set an environment flag or upgrade the MailerSend account and we can re-enable this.
-                            console.log('User confirmation is disabled; admin notification was sent to', adminTo);
+            // const locale = (body && body.locale) || "en";
+            // user confirmation email content is intentionally disabled (not sent)
+            // If you enable sending to users later, you can reintroduce subjectUser and htmlUser here.
 
-                        }
+            // User confirmation emails are disabled by default to avoid trial-account delivery errors.
+            // Admin notification was already sent above. If you need user confirmations enabled,
+            // set an environment flag or upgrade the MailerSend account and we can re-enable this.
+            console.log('User confirmation is disabled; admin notification was sent to', adminTo);
 
-		return NextResponse.json({ ok: true });
-	} catch (error) {
-		console.error('Error sending email:', error);
-		return NextResponse.json({ error: "Failed to send" }, { status: 500 });
-	}
+        }
+
+        return NextResponse.json({ ok: true });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        return NextResponse.json({ error: "Failed to send" }, { status: 500 });
+    }
 }
